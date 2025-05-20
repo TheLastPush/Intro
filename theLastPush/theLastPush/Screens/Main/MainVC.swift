@@ -92,10 +92,12 @@ class MainVC: UIViewController {
     
     // TODO: 온보딩으로 이동
     @objc private func introButtonTapped() {
-            print("온보딩 페이지로 이동!")
+        let vc = OnboardingVC()
+        vc.modalPresentationStyle = .fullScreen
+        present(vc, animated: true)
     }
-    
 }
+
 extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return members.count
