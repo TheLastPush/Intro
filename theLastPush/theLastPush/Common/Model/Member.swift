@@ -5,7 +5,7 @@
 //  Created by 지영 on 5/20/25.
 //
 
-import Foundation
+import UIKit
 
 struct Member {
     let name: String
@@ -15,4 +15,5 @@ struct Member {
     let strength: String
     let collaborationStyle: String
     let blogURL: String
+    let backgroundColor: UIColor
 }
