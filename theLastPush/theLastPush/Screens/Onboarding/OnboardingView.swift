@@ -15,7 +15,11 @@ class OnBoardingView: UIView {
 		let label = UILabel()
 
 		label.text = "The Last Push"
+		label.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 36)
+		label.layer.shadowOffset = CGSize(width: 0, height: 2)
+		label.layer.shadowOpacity = 0.15
 		label.textAlignment = .center
+
 
 		return label
 	}()
@@ -24,6 +28,7 @@ class OnBoardingView: UIView {
 		let label = UILabel()
 
 		label.text = "마지막 푸시라고 했잖아!"
+		label.font = UIFont(name: "IBMPlexSansKR-Medium", size: 20)
 		label.textAlignment = .left
 
 		return label
@@ -33,6 +38,10 @@ class OnBoardingView: UIView {
 		let button = UIButton(type: .system)
 
 		button.setTitle("팀원에 대해 알아보기", for: .normal)
+		button.setTitleColor(.white, for: .normal)
+		button.titleLabel?.font = UIFont(name: "IBMPlexSansKR-Medium", size: 25)
+		button.backgroundColor = .mainYellow
+		button.layer.cornerRadius = 10
 
 		return button
 	}()
@@ -75,12 +84,16 @@ class OnBoardingView: UIView {
 
 	let fourth_team_explain_view: Team_explain_view = {
 		var logo_image =
-			UIImage(systemName: "person.fill")!.withTintColor(
+			UIImage(systemName: "link")!.withTintColor(
 				UIColor(red: 192 / 255, green: 57 / 255, blue: 43 / 255, alpha: 1.0), renderingMode: .alwaysOriginal)
 		let team_expain_view = Team_explain_view(
 			logo_image: logo_image,
 			title: "우리 팀만의 약속은...",
-			explain: "책임 - 맡은 일은 끝까지 책임지고 완수합니다. 배려 - 서로의 입장을 이해하고 존중합니다. 피드백 - 솔직하게 말하되, 성장으로 이어지는 대화를 나눕니다.",
+			explain: """
+					책임 - 맡은 일은 끝까지 책임지고 완수합니다.
+					배려 - 서로의 입장을 이해하고 존중합니다.
+					피드백 - 솔직하게 말하되, 성장으로 이어지는 대화를 나눕니다.
+					""",
 			logo_baseColor: UIColor(red: 255 / 255, green: 179 / 255, blue: 172 / 255, alpha: 1.0))
 
 		return team_expain_view
@@ -100,42 +113,45 @@ class OnBoardingView: UIView {
 
 		title_label.snp.makeConstraints { make in
 			make.top.equalToSuperview().offset(104)
-			make.leading.trailing.equalToSuperview()
+			make.centerX.equalToSuperview()
 			make.height.equalTo(36)
 		}
 
 		sub_title_label.snp.makeConstraints { make in
 			make.top.equalTo(title_label.snp.bottom).offset(8)
-			make.leading.trailing.equalToSuperview()
+			make.leading.equalTo(title_label.snp.leading)
+			make.trailing.equalToSuperview()
 			make.height.equalTo(30)
 		}
 
 		first_team_explain_view.snp.makeConstraints { make in
-			make.top.equalTo(sub_title_label.snp.bottom).offset(40)
+			make.top.equalTo(sub_title_label.snp.bottom).offset(20)
 			make.leading.trailing.equalToSuperview().offset(20)
-			make.height.equalTo(63)
+			make.height.equalTo(100)
 		}
 
 		second_team_explain_view.snp.makeConstraints { make in
-			make.top.equalTo(first_team_explain_view.snp.bottom).offset(40)
+			make.top.equalTo(first_team_explain_view.snp.bottom).offset(20)
 			make.leading.trailing.equalToSuperview().offset(20)
-			make.height.equalTo(66)
+			make.height.equalTo(100)
 		}
 
 		third_team_explain_view.snp.makeConstraints { make in
-			make.top.equalTo(second_team_explain_view.snp.bottom).offset(40)
+			make.top.equalTo(second_team_explain_view.snp.bottom).offset(20)
 			make.leading.trailing.equalToSuperview().offset(20)
 			make.height.equalTo(106)
 		}
 
 		fourth_team_explain_view.snp.makeConstraints { make in
-			make.top.equalTo(third_team_explain_view.snp.bottom).offset(40)
+			make.top.equalTo(third_team_explain_view.snp.bottom).offset(20)
 			make.leading.trailing.equalToSuperview().offset(20)
-			make.height.equalTo(94)
+			make.height.equalTo(130)
 		}
+
 		next_button.snp.makeConstraints { make in
 			make.bottom.equalToSuperview().inset(40)
-			make.leading.trailing.equalToSuperview()
+			make.leading.equalToSuperview().offset(24)
+			make.trailing.equalToSuperview().inset(24)
 			make.height.equalTo(48)
 		}
 	}
