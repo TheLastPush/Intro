@@ -15,7 +15,7 @@ class MainVC: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "THE LAST PUSH"
-        label.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        label.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 36)
         label.textColor = .black
         label.textAlignment = .center
         return label

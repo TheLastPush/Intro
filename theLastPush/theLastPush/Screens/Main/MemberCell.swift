@@ -26,7 +26,7 @@ class MemberCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.font = UIFont(name: "IBMPlexSansKR-SemiBold", size: 15)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -34,7 +34,7 @@ class MemberCell: UICollectionViewCell {
     
     private let mbtiLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont.systemFont(ofSize: 15, weight: .semibold)
+        label.font = UIFont(name: "IBMPlexSansKR-SemiBold", size: 15)
         label.textColor = .black
         label.textAlignment = .center
         return label
