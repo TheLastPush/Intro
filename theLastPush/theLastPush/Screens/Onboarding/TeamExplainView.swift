@@ -16,13 +16,10 @@ class Team_explain_view: UIView {
 	private let explain: String
 	private let logo_baseColor: UIColor
 
-	let vertical_stackView: UIStackView = {
-		let stackView = UIStackView()
+	let vertical_view: UIView = {
+		let view = UIView()
 
-		stackView.axis = .vertical
-		stackView.distribution = .fill
-
-		return stackView
+		return view
 	}()
 
 	let logo_imageView: UIImageView = {
@@ -44,11 +41,18 @@ class Team_explain_view: UIView {
 	let title_label: UILabel = {
 		let label = UILabel()
 
+		label.font = UIFont(name: "IBMPlexSansKR-Bold", size: 20)
+		label.frame.size.height = 24
+
 		return label
 	}()
 
 	let expain_textView: UITextView = {
 		let textView = UITextView()
+
+		textView.font = UIFont(name: "IBMPlexSansKR-Medium", size: 13)
+		textView.isEditable = false
+		textView.isScrollEnabled = false
 
 		return textView
 	}()
@@ -75,11 +79,11 @@ class Team_explain_view: UIView {
 		title_label.text = title
 		expain_textView.text = explain
 
-		addSubview(vertical_stackView)
+		addSubview(vertical_view)
 		addSubview(logo_circleView)
 		logo_circleView.addSubview(logo_imageView)
-		vertical_stackView.addArrangedSubview(title_label)
-		vertical_stackView.addArrangedSubview(expain_textView)
+		vertical_view.addSubview(title_label)
+		vertical_view.addSubview(expain_textView)
 
 		logo_circleView.snp.makeConstraints { make in
 			make.top.leading.equalToSuperview()
@@ -91,10 +95,20 @@ class Team_explain_view: UIView {
 			make.width.height.equalTo(30)
 		}
 
-		vertical_stackView.snp.makeConstraints { make in
+		vertical_view.snp.makeConstraints { make in
 			make.top.bottom.equalToSuperview()
 			make.trailing.equalToSuperview().inset(24)
 			make.leading.equalTo(logo_imageView.snp.trailing).offset(24)
+		}
+
+		title_label.snp.makeConstraints { make in
+			make.top.leading.trailing.equalToSuperview()
+			make.height.equalTo(36)
+		}
+
+		expain_textView.snp.makeConstraints { make in
+			make.top.equalTo(title_label.snp.bottom).inset(8)
+			make.leading.trailing.bottom.equalToSuperview()
 		}
 	}
 }
