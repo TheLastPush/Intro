@@ -47,7 +47,7 @@ class TeamExplainView: UIView {
 		return label
 	}()
 
-	let expainTextView: UITextView = {
+	let explainTextView: UITextView = {
 		let textView = UITextView()
 
 		textView.font = UIFont(name: "IBMPlexSansKR-Medium", size: 13)
@@ -77,13 +77,13 @@ class TeamExplainView: UIView {
 		logoImageView.image = logoImage
 		logoCircleView.backgroundColor = logoBaseColor
 		titleLabel.text = title
-		expainTextView.text = explain
+		explainTextView.text = explain
 
 		addSubview(verticalView)
 		addSubview(logoCircleView)
 		logoCircleView.addSubview(logoImageView)
 		verticalView.addSubview(titleLabel)
-		verticalView.addSubview(expainTextView)
+		verticalView.addSubview(explainTextView)
 
 		logoCircleView.snp.makeConstraints { make in
 			make.top.leading.equalToSuperview()
@@ -106,7 +106,7 @@ class TeamExplainView: UIView {
 			make.height.equalTo(36)
 		}
 
-		expainTextView.snp.makeConstraints { make in
+		explainTextView.snp.makeConstraints { make in
 			make.top.equalTo(titleLabel.snp.bottom).inset(8)
 			make.leading.trailing.bottom.equalToSuperview()
 		}
