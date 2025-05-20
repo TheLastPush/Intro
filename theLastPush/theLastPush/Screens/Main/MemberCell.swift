@@ -68,13 +68,13 @@ class MemberCell: UICollectionViewCell {
         nameLabel.snp.makeConstraints { make in
             make.top.equalTo(profileImageView.snp.bottom).offset(20)
             make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
         
         mbtiLabel.snp.makeConstraints { make in
             make.top.equalTo(nameLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(10)
+            make.leading.trailing.equalToSuperview().inset(10)
         }
     }
     

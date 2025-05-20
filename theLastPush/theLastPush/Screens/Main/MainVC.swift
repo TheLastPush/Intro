@@ -63,7 +63,7 @@ class MainVC: UIViewController {
         titleLabel.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(56)
             make.centerX.equalToSuperview()
-            make.left.right.equalToSuperview().inset(24)
+            make.leading.trailing.equalToSuperview().inset(24)
         }
     }
     
@@ -83,7 +83,7 @@ class MainVC: UIViewController {
         view.addSubview(membersCollectionView)
         membersCollectionView.snp.makeConstraints { make in
             make.top.equalTo(introButton.snp.bottom).offset(60)
-            make.left.right.equalToSuperview().inset(20)
+            make.leading.trailing.equalToSuperview().inset(20)
             make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
         }
     }
