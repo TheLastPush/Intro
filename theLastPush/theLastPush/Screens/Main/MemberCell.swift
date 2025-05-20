@@ -42,7 +42,7 @@ class MemberCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
+        setupUI()
     }
     
     required init?(coder: NSCoder) {
@@ -72,10 +72,9 @@ class MemberCell: UICollectionViewCell {
         }
         
         mbtiLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(0)
+            make.top.equalTo(nameLabel.snp.bottom).offset(8)
             make.centerX.equalToSuperview()
             make.left.right.equalToSuperview().inset(10)
-            make.bottom.equalToSuperview().offset(-24)
         }
     }
     
