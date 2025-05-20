@@ -48,9 +48,74 @@ class MainVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        view.backgroundColor = .mainYellow
+        view.backgroundColor = .white
+        setupUI()
     }
-
-
+    
+    private func setupUI()  {
+        setupTitleLabel()
+        setupIntroButton()
+        setUpMembersCollectionView()
+    }
+    
+    private func setupTitleLabel() {
+        view.addSubview(titleLabel)
+        titleLabel.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(56)
+            make.centerX.equalToSuperview()
+            make.left.right.equalToSuperview().inset(24)
+        }
+    }
+    
+    private func setupIntroButton() {
+        view.addSubview(introButton)
+        introButton.snp.makeConstraints { make in
+            make.top.equalTo(titleLabel.snp.bottom).offset(50)
+            make.centerX.equalToSuperview()
+            make.width.equalTo(200)
+            make.height.equalTo(60)
+        }
+        
+        introButton.addTarget(self, action: #selector(introButtonTapped), for: .touchUpInside)
+    }
+    
+    private func setUpMembersCollectionView() {
+        view.addSubview(membersCollectionView)
+        membersCollectionView.snp.makeConstraints { make in
+            make.top.equalTo(introButton.snp.bottom).offset(60)
+            make.left.right.equalToSuperview().inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
+        }
+    }
+    
+    // TODO: 온보딩으로 이동
+    @objc private func introButtonTapped() {
+            print("온보딩 페이지로 이동!")
+    }
+    
+}
+extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return members.count
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MemberCell.identifier, for: indexPath) as? MemberCell else { return UICollectionViewCell() }
+        cell.configure(with: members[indexPath.item])
+        return cell
+    }
+    
+    // TODO: 멤버 페이지로 이동
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let member = members[indexPath.item]
+        print("\(member.name) 페이지로 이동!")
+    }
+    
 }
 
+extension MainVC: UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (collectionView.frame.width - 20) / 2
+        return CGSize(width: width, height: width * 1.3)
+    }
+}
