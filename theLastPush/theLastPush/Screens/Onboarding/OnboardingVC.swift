@@ -9,21 +9,22 @@ import UIKit
 
 class OnboardingVC: UIViewController {
 
+	private let onboardingView = OnBoardingView()
+
+	override func loadView() {
+		view = onboardingView
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        // Do any additional setup after loading the view.
+		onboardingView.next_button.addTarget(self, action: #selector(tap_next_button), for: .touchUpInside)
     }
-    
 
-    /*
-    // MARK: - Navigation
+	@objc func tap_next_button() {
+		let vc = MainVC()
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
+		vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+		present(vc, animated: false)
+	}
 }
