@@ -18,6 +18,8 @@ class MainVC: UIViewController {
         label.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 36)
         label.textColor = .black
         label.textAlignment = .center
+        label.shadowColor = UIColor(white: 0, alpha: 0.2)
+        label.shadowOffset = CGSize(width: 0, height: 3)
         return label
     }()
     
