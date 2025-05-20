@@ -19,10 +19,18 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         guard let windowScene = (scene as? UIWindowScene) else { return }
                 
         let window = UIWindow(windowScene: windowScene)
-        let vc = MainVC()
-        window.rootViewController = vc
-        self.window = window
-        window.makeKeyAndVisible()
+		let hasLaunched = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
+		let rootVC = hasLaunched
+			? MainVC()
+			: OnboardingVC()
+
+		self.window = window
+		window.rootViewController = rootVC
+		window.makeKeyAndVisible()
+
+		if hasLaunched == false {
+			UserDefaults.standard.set(true, forKey: "hasLaunchedBefore")
+		}
     }
 
     func sceneDidDisconnect(_ scene: UIScene) {
