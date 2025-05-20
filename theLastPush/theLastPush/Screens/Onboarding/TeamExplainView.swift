@@ -9,20 +9,20 @@ import UIKit
 
 import SnapKit
 
-class Team_explain_view: UIView {
+class TeamExplainView: UIView {
 
-	private let logo_image: UIImage
+	private let logoImage: UIImage
 	private let title: String
 	private let explain: String
-	private let logo_baseColor: UIColor
+	private let logoBaseColor: UIColor
 
-	let vertical_view: UIView = {
+	let verticalView: UIView = {
 		let view = UIView()
 
 		return view
 	}()
 
-	let logo_imageView: UIImageView = {
+	let logoImageView: UIImageView = {
 		let imageView = UIImageView()
 
 		imageView.contentMode = .scaleAspectFit
@@ -30,7 +30,7 @@ class Team_explain_view: UIView {
 		return imageView
 	}()
 
-	let logo_circleView: UIView = {
+	let logoCircleView: UIView = {
 		let view = UIView()
 
 		view.layer.cornerRadius = 25
@@ -38,7 +38,7 @@ class Team_explain_view: UIView {
 		return view
 	}()
 
-	let title_label: UILabel = {
+	let titleLabel: UILabel = {
 		let label = UILabel()
 
 		label.font = UIFont(name: "IBMPlexSansKR-Bold", size: 20)
@@ -47,7 +47,7 @@ class Team_explain_view: UIView {
 		return label
 	}()
 
-	let expain_textView: UITextView = {
+	let expainTextView: UITextView = {
 		let textView = UITextView()
 
 		textView.font = UIFont(name: "IBMPlexSansKR-Medium", size: 13)
@@ -57,11 +57,11 @@ class Team_explain_view: UIView {
 		return textView
 	}()
 
-	init(logo_image: UIImage, title: String, explain: String, logo_baseColor: UIColor) {
-		self.logo_image = logo_image
+	init(logoImage: UIImage, title: String, explain: String, logoBaseColor: UIColor) {
+		self.logoImage = logoImage
 		self.title = title
 		self.explain = explain
-		self.logo_baseColor = logo_baseColor
+		self.logoBaseColor = logoBaseColor
 
 		super.init(frame: .zero)
 
@@ -74,40 +74,40 @@ class Team_explain_view: UIView {
 
 	private func setupView() {
 		backgroundColor = .white
-		logo_imageView.image = logo_image
-		logo_circleView.backgroundColor = logo_baseColor
-		title_label.text = title
-		expain_textView.text = explain
+		logoImageView.image = logoImage
+		logoCircleView.backgroundColor = logoBaseColor
+		titleLabel.text = title
+		expainTextView.text = explain
 
-		addSubview(vertical_view)
-		addSubview(logo_circleView)
-		logo_circleView.addSubview(logo_imageView)
-		vertical_view.addSubview(title_label)
-		vertical_view.addSubview(expain_textView)
+		addSubview(verticalView)
+		addSubview(logoCircleView)
+		logoCircleView.addSubview(logoImageView)
+		verticalView.addSubview(titleLabel)
+		verticalView.addSubview(expainTextView)
 
-		logo_circleView.snp.makeConstraints { make in
+		logoCircleView.snp.makeConstraints { make in
 			make.top.leading.equalToSuperview()
 			make.width.height.equalTo(50)
 		}
 
-		logo_imageView.snp.makeConstraints { make in
+		logoImageView.snp.makeConstraints { make in
 			make.center.equalToSuperview()
 			make.width.height.equalTo(30)
 		}
 
-		vertical_view.snp.makeConstraints { make in
+		verticalView.snp.makeConstraints { make in
 			make.top.bottom.equalToSuperview()
 			make.trailing.equalToSuperview().inset(24)
-			make.leading.equalTo(logo_imageView.snp.trailing).offset(24)
+			make.leading.equalTo(logoImageView.snp.trailing).offset(24)
 		}
 
-		title_label.snp.makeConstraints { make in
+		titleLabel.snp.makeConstraints { make in
 			make.top.leading.trailing.equalToSuperview()
 			make.height.equalTo(36)
 		}
 
-		expain_textView.snp.makeConstraints { make in
-			make.top.equalTo(title_label.snp.bottom).inset(8)
+		expainTextView.snp.makeConstraints { make in
+			make.top.equalTo(titleLabel.snp.bottom).inset(8)
 			make.leading.trailing.bottom.equalToSuperview()
 		}
 	}

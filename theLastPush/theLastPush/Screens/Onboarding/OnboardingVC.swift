@@ -18,10 +18,10 @@ class OnboardingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
-		onboardingView.next_button.addTarget(self, action: #selector(tap_next_button), for: .touchUpInside)
+		onboardingView.nextButton.addTarget(self, action: #selector(TapNextButton), for: .touchUpInside)
     }
 
-	@objc func tap_next_button() {
+	@objc func TapNextButton() {
 		let vc = MainVC()
 
 		vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
