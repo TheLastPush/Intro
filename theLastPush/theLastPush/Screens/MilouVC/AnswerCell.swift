@@ -17,6 +17,7 @@ class AnswerCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
+        setupUI()
         
     }
     
@@ -36,32 +37,34 @@ class AnswerCell: UITableViewCell {
         chattingView.clipsToBounds = true
         chattingView.layer.cornerRadius = 20
         chattingView.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner ]
+        chattingView.layer.borderWidth = 2
+        chattingView.layer.borderColor = UIColor.answerRed.cgColor
         contentView.addSubview(chattingView)
         
         messageLabel.numberOfLines = 0
         messageLabel.textColor = .black
-        messageLabel.font = UIFont(name: "IBMPlexSansKR-Medium", size: 15)
+        messageLabel.font = UIFont.ibmPlexSansKR(size: 15)
         chattingView.addSubview(messageLabel)
         
         profileImageView.snp.makeConstraints {
             $0.width.height.equalTo(48)
             $0.trailing.equalToSuperview().offset(-16)
-            $0.bottom.equalTo(chattingView.snp.bottom)
+            $0.top.equalTo(chattingView.snp.top)
         }
         
         chattingView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
             $0.trailing.equalTo(profileImageView.snp.leading).offset(-8)
-            $0.bottom.equalToSuperview().offset(-8)
-            $0.width.lessThanOrEqualTo(contentView.snp.width).multipliedBy(0.7)
+            $0.bottom.equalToSuperview().offset(-24)
+            $0.width.lessThanOrEqualTo(contentView.snp.width).multipliedBy(0.8)
         }
         
         messageLabel.snp.makeConstraints {
-            $0.edges.equalTo(chattingView).inset(UIEdgeInsets(top: 8, left: 8, bottom: 8, right: 8))
+            $0.edges.equalTo(chattingView).inset(UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
         }
     }
     
-    func configure(with message: String, profileImage: UIImage) {
+    func configure(with message: String, profileImage: UIImage?) {
         messageLabel.text = message
         profileImageView.image = profileImage
     }
