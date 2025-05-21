@@ -47,6 +47,14 @@ class MainVC: UIViewController {
         return collectionView
     }()
 
+	override func viewWillAppear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = true
+	}
+
+	override func viewWillDisappear(_ animated: Bool) {
+		navigationController?.isNavigationBarHidden = true
+	}
+
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -112,7 +120,24 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
     // TODO: 멤버 페이지로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let member = members[indexPath.item]
+		var nextViewController: UIViewController
         print("\(member.name) 페이지로 이동!")
+
+		switch member.name {
+		case "조성준":
+			nextViewController = JuseojoVC()
+		case "양지영":
+			nextViewController = MilouVC()
+		case "서광용":
+			nextViewController = MoriVC()
+		case "이태윤":
+			nextViewController = PuddingVC()
+		default:
+			nextViewController = JuseojoVC()
+		}
+
+
+		self.navigationController?.pushViewController(nextViewController, animated: true)
     }
     
 }
