@@ -7,7 +7,7 @@
 
 import UIKit
 
-let members: [Member] = [
+let memberData: [Member] = [
     Member(name: "이태윤",
            profileImage: "member1",
            mbti: "ENFP",

@@ -4,9 +4,11 @@
 <dict>
 	<key>UIAppFonts</key>
 	<array>
+		<string>IBMPlexSansKR-SemiBold.ttf</string>
 		<string>NunitoSans-VariableFont_YTLC,opsz,wdth,wght.ttf</string>
 		<string>IBMPlexSansKR-Medium.ttf</string>
 		<string>IBMPlexSansKR-Bold.ttf</string>
+		<string>IBMPlexSansKR-Regular.ttf</string>
 	</array>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
