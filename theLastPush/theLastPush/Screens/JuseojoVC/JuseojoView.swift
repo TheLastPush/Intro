@@ -100,7 +100,7 @@ class JuseojoView: UIView {
 	let explainLabel: UILabel = {
 		let label = UILabel()
 		var attributes = NSMutableAttributedString()
-		let mediumFont: [NSAttributedString.Key: Any] = [.font: UIFont(name: "IBMPlexSansKR-Mediu", size: 14).unwrap(fontSize: 14)]
+		let mediumFont: [NSAttributedString.Key: Any] = [.font: UIFont(name: "IBMPlexSansKR-Medium", size: 14).unwrap(fontSize: 14)]
 		let regularFont: [NSAttributedString.Key: Any] = [.font: UIFont(name: "IBMPlexSansKR-Regular", size: 14).unwrap(fontSize: 14)]
 		let blueFont: [NSAttributedString.Key : Any] = [
 			.font: UIFont(name: "IBMPlexSansKR-Regular", size: 14).unwrap(fontSize: 14),
