@@ -127,7 +127,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
 		case "조성준":
 			nextViewController = JuseojoVC()
 		case "양지영":
-			nextViewController = MilouVC()
+			//nextViewController = MilouVC()
 		case "서광용":
 			nextViewController = MoriVC()
 		case "이태윤":
