@@ -21,7 +21,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
 		let hasLaunched = UserDefaults.standard.bool(forKey: "hasLaunchedBefore")
 		let rootVC = hasLaunched
-			? MainVC()
+			? MoriVC() // MainVC였음
 			: OnboardingVC()
 
 		self.window = window
