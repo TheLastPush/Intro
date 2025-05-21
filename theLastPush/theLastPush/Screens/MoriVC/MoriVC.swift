@@ -31,6 +31,7 @@ final class MoriVC: UIViewController {
     private let blogButton = UIButton(type: .system) // 블로그 버튼
     private let gitHubButton = UIButton(type: .system) // GitHub 버튼
     
+    private let backButton = UIButton(type: .system)
     
     // MARK: - viewDidLoad()
     override func viewDidLoad() {
@@ -48,6 +49,8 @@ final class MoriVC: UIViewController {
         
         blogButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
         gitHubButton.addTarget(self, action: #selector(gitHubButtonTapped), for: .touchUpInside)
+        
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Layout
@@ -60,6 +63,7 @@ final class MoriVC: UIViewController {
         setupCollaborationLayout()
         setupBlogButtonLayout()
         setupGitHubButtonLayout()
+        setupBackButtonLayout()
     }
     
     // MARK: - 스크롤 뷰 + 콘텐츠 뷰
@@ -82,7 +86,7 @@ final class MoriVC: UIViewController {
         contentView.addSubview(cardView) // 하얀색 박스 영역.
         
         cardView.snp.makeConstraints { make in // cardView의 제약 조건
-            make.top.equalTo(contentView).offset(32)
+            make.top.equalTo(contentView).offset(130)
             make.leading.trailing.equalTo(contentView).inset(20)
             make.height.greaterThanOrEqualTo(600) // cardView의 임시 최소 높이 600pt (이미지나 콘텐츠가 늘어나면 자동으로 커짐)
         }
@@ -175,6 +179,17 @@ final class MoriVC: UIViewController {
         }
     }
 
+    // MARK: - Back 버튼
+    private func setupBackButtonLayout() {
+        view.addSubview(backButton)
+        
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(70)
+            make.leading.equalToSuperview().offset(16)
+            make.width.height.equalTo(32) //
+        }
+    }
+    
     
     
     // MARK: - Style
@@ -187,6 +202,7 @@ final class MoriVC: UIViewController {
         setupCollaborationStyle()
         setupBlogButtonStyle()
         setupGitHubButtonStyle()
+        setupBackButtonStyle()
     }
     
     private func setupBaseStyle() {
@@ -265,6 +281,12 @@ final class MoriVC: UIViewController {
         gitHubButton.layer.cornerRadius = 8
     }
     
+    private func setupBackButtonStyle() {
+        let image = UIImage(systemName: "chevron.left")
+        backButton.setImage(image, for: .normal)
+        backButton.tintColor = .label
+    }
+    
     private func makeIconLabel(text: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
@@ -283,5 +305,9 @@ final class MoriVC: UIViewController {
     @objc private func gitHubButtonTapped() {
         guard let url = URL(string: "https://github.com/Gwangyong") else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
+    }
+    
+    @objc private func backButtonTapped() {
+        navigationController?.popViewController(animated: true)
     }
 }
