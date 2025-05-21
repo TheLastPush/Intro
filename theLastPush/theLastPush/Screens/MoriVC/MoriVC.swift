@@ -28,6 +28,9 @@ final class MoriVC: UIViewController {
     private let collaborationTitleLabel = UILabel() // 스타일 협업 섹션 제목
     private let collaborationContentLabel = UILabel() // 스타일 협업 내용
     
+    private let blogButton = UIButton(type: .system) // 블로그 버튼
+    private let gitHubButton = UIButton(type: .system) // GitHub 버튼
+    
     
     // MARK: - viewDidLoad()
     override func viewDidLoad() {
@@ -42,6 +45,9 @@ final class MoriVC: UIViewController {
             좋아하는 예비 iOS 개발자 서광용입니다!
             """
         collaborationContentLabel.text = "대화를 통해 협업을 맞춰가는 방식을 좋아하며, 서로의 스타일을 존중하려고 노력합니다."
+        
+        blogButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
+        gitHubButton.addTarget(self, action: #selector(gitHubButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Layout
@@ -52,6 +58,8 @@ final class MoriVC: UIViewController {
         setupIntroLayout()
         setupStrengthLayout()
         setupCollaborationLayout()
+        setupBlogButtonLayout()
+        setupGitHubButtonLayout()
     }
     
     // MARK: - 스크롤 뷰 + 콘텐츠 뷰
@@ -144,6 +152,28 @@ final class MoriVC: UIViewController {
             make.leading.trailing.equalTo(cardView).inset(16)
         }
     }
+    
+    // MARK: - Blog 버튼
+    private func setupBlogButtonLayout() {
+        cardView.addSubview(blogButton)
+        
+        blogButton.snp.makeConstraints { make in // 블로그 버튼 제약조건
+            make.top.equalTo(collaborationContentLabel.snp.bottom).offset(80)
+            make.leading.trailing.equalTo(cardView).inset(16)
+            make.height.equalTo(44)
+        }
+    }
+    
+    // MARK: - GitHub 버튼
+    private func setupGitHubButtonLayout() {
+        cardView.addSubview(gitHubButton)
+        
+        gitHubButton.snp.makeConstraints { make in
+            make.top.equalTo(blogButton.snp.bottom).offset(15)
+            make.leading.trailing.equalTo(cardView).inset(16)
+            make.height.equalTo(44)
+        }
+    }
 
     
     
@@ -155,6 +185,8 @@ final class MoriVC: UIViewController {
         setupIntroStyle()
         setupStrengthStyle()
         setupCollaborationStyle()
+        setupBlogButtonStyle()
+        setupGitHubButtonStyle()
     }
     
     private func setupBaseStyle() {
@@ -182,7 +214,7 @@ final class MoriVC: UIViewController {
         introTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
         introTitleLabel.textColor = .label
         
-        introContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 12)
+        introContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
         introContentLabel.textColor = .darkGray
         introContentLabel.numberOfLines = 0 // 줄 수 제한 없앰
         introContentLabel.lineBreakMode = .byWordWrapping // 단어 단위로 자연스럽게 줄 바꿈
@@ -211,17 +243,45 @@ final class MoriVC: UIViewController {
         collaborationTitleLabel.textColor = .label
         
 
-        collaborationContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 12)
+        collaborationContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
         collaborationContentLabel.textColor = .darkGray
         collaborationContentLabel.numberOfLines = 0
         collaborationContentLabel.lineBreakMode = .byWordWrapping
     }
     
+    private func setupBlogButtonStyle() {
+        blogButton.setTitle("블로그 보러가기", for: .normal)
+        blogButton.setTitleColor(.white, for: .normal)
+        blogButton.backgroundColor = .systemPurple
+        blogButton.titleLabel?.font = UIFont(name: "IBMPlexSansKR-Medium", size: 15)
+        blogButton.layer.cornerRadius = 8
+    }
+    
+    private func setupGitHubButtonStyle() {
+        gitHubButton.setTitle("깃허브 보러가기", for: .normal) // .normal: 기본 상태(아무것도 안하고 있는)
+        gitHubButton.setTitleColor(.white, for: .normal)
+        gitHubButton.backgroundColor = .systemPurple
+        gitHubButton.titleLabel?.font = UIFont(name: "IBMPlexSansKR-Medium", size: 15)
+        gitHubButton.layer.cornerRadius = 8
+    }
+    
     private func makeIconLabel(text: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "IBMPlexSansKR-Regular", size: 12)
+        label.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
         label.textColor = .darkGray
         label.text = text
         return label
+    }
+    
+    // MARK: - BlogButtonAction
+    @objc private func blogButtonTapped() {
+        guard let url = URL(string: "https://jud00.tistory.com/") else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil) // url 열기
+    }
+    
+    // MARK: - GitHubButtonAction
+    @objc private func gitHubButtonTapped() {
+        guard let url = URL(string: "https://github.com/Gwangyong") else { return }
+        UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
 }
