@@ -15,7 +15,7 @@ class OnBoardingView: UIView {
 		let label = UILabel()
 
 		label.text = "The Last Push"
-		label.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 36)
+		label.font = UIFont.nunitoSans(size: 36, weight: .black)
 		label.layer.shadowOffset = CGSize(width: 0, height: 2)
 		label.layer.shadowOpacity = 0.15
 		label.textAlignment = .center

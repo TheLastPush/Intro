@@ -27,7 +27,7 @@ class JuseojoVC: UIViewController {
 
 	@objc func tapBackButton() {
 		print("back tapped")
-		dismiss(animated: true)
+		self.navigationController?.popViewController(animated: true)
 	}
 
 	@objc func tapHeartButton(_ sender: UIButton) {

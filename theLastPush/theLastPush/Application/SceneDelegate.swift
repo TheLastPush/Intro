@@ -25,7 +25,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 			: OnboardingVC()
 
 		self.window = window
-		window.rootViewController = rootVC
+		window.rootViewController = UINavigationController(rootViewController: rootVC)
 		window.makeKeyAndVisible()
 
 		if hasLaunched == false {

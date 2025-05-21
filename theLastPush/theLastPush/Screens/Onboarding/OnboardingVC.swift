@@ -22,9 +22,14 @@ class OnboardingVC: UIViewController {
     }
 
 	@objc func TapNextButton() {
-		let vc = MainVC()
+		if self.navigationController?.topViewController == self {
+			let vc = UINavigationController(rootViewController: MainVC())
 
-		vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
-		present(vc, animated: false)
+			vc.modalPresentationStyle = UIModalPresentationStyle.fullScreen
+			present(vc, animated: false)
+		}
+		else {
+			dismiss(animated: true)
+		}
 	}
 }
