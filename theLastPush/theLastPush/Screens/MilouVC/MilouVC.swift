@@ -22,16 +22,53 @@ struct Message {
 class MilouVC: UIViewController {
     
     private let member: Member
-    private let backButton = UIButton()
-    private let nameLabel = UILabel()
-    private let tistoryButton = UIButton()
-    private let introContainerView = UIView()
-    private let introLabel = UILabel()
-    private let moreLabel = UILabel()
-    private let tableView = UITableView()
     private var allMessages: [Message] = []
     private var messages: [Message] = []
     private var hasAnimated: Bool = false
+    private let tableView = UITableView()
+    
+    private let backButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
+        button.tintColor = .black
+        return button
+    }()
+    
+    private let nameLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.ibmPlexSansKR(size: 32, weight: .black)
+        return label
+    }()
+    
+    private let tistoryButton: UIButton = {
+        let button = UIButton()
+        button.setImage(UIImage(named: "tistory"), for: .normal)
+        button.tintColor = .systemRed
+        return button
+    }()
+    
+    private let introContainerView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.layer.cornerRadius = 10
+        return view
+    }()
+    
+    private let introLabel: UILabel = {
+        let label = UILabel()
+        label.font =  UIFont.ibmPlexSansKR(size: 16)
+        label.numberOfLines = 0
+        label.textColor = .darkGray
+        return label
+    }()
+    
+    private let moreLabel: UILabel = {
+        let label = UILabel()
+        label.text = "🔎 더 알아보기"
+        label.font = UIFont.ibmPlexSansKR(size: 18, weight: .bold)
+        return label
+    }()
+    
     
     init(member: Member) {
             self.member = member
@@ -45,21 +82,19 @@ class MilouVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupMessageData()
-        setupUI()
+        configure()
+        setupView()
+        setupConstraints()
         setupTableView()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-//        animateMessagesOneByOne()
-
-        // 애니메이션이 한 번만 실행되도록
         if !hasAnimated {
             startMessageAnimation()
             hasAnimated = true
         }
     }
-    
     
     private func setupMessageData() {
         allMessages = [
@@ -72,65 +107,59 @@ class MilouVC: UIViewController {
         messages = []
     }
     
-    private func setupUI() {
-        view.backgroundColor = UIColor.backgroundRed
-        
+    private func configure() {
+        nameLabel.text = member.name
+        introLabel.text = member.description
+    }
+    
+    private func setupView() {
         view.addSubview(backButton)
-        backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
-        backButton.tintColor = .black
+        view.addSubview(nameLabel)
+        view.addSubview(tistoryButton)
+        view.addSubview(introContainerView)
+        introContainerView.addSubview(introLabel)
+        view.addSubview(moreLabel)
+        view.addSubview(tableView)
+        
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        tistoryButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
+
+        view.backgroundColor = UIColor.backgroundRed
+    }
+   
+    
+    private func setupConstraints() {
         backButton.snp.makeConstraints {
             $0.top.equalTo(view.safeAreaLayoutGuide).offset(6)
             $0.leading.equalToSuperview().offset(16)
             $0.width.height.equalTo(44)
         }
         
-        view.addSubview(nameLabel)
-        nameLabel.text = member.name
-        nameLabel.font = UIFont.ibmPlexSansKR(size: 32, weight: .black)
         nameLabel.snp.makeConstraints {
             $0.top.equalTo(backButton.snp.bottom).offset(40)
             $0.leading.equalToSuperview().offset(20)
         }
         
-        
-        view.addSubview(tistoryButton)
-        tistoryButton.setImage(UIImage(named: "tistory"), for: .normal)
-        tistoryButton.tintColor = .systemRed
-        tistoryButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
         tistoryButton.snp.makeConstraints {
             $0.centerY.equalTo(nameLabel)
             $0.leading.equalTo(nameLabel.snp.trailing).offset(16)
             $0.width.height.equalTo(40)
         }
         
-        
-        view.addSubview(introContainerView)
-        introContainerView.backgroundColor = .white
-        introContainerView.layer.cornerRadius = 10
         introContainerView.snp.makeConstraints {
             $0.top.equalTo(nameLabel.snp.bottom).offset(20)
             $0.leading.trailing.equalToSuperview().inset(20)
         }
         
-        introContainerView.addSubview(introLabel)
-        introLabel.text = member.description
-        introLabel.font =  UIFont.ibmPlexSansKR(size: 16)
-        introLabel.numberOfLines = 0
-        introLabel.textColor = .darkGray
         introLabel.snp.makeConstraints {
             $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         }
         
-        view.addSubview(moreLabel)
-        moreLabel.text = "🔎 더 알아보기"
-        moreLabel.font = UIFont.ibmPlexSansKR(size: 18, weight: .bold)
         moreLabel.snp.makeConstraints {
             $0.top.equalTo(introContainerView.snp.bottom).offset(32)
             $0.leading.equalToSuperview().inset(20)
         }
         
-        view.addSubview(tableView)
         tableView.snp.makeConstraints {
             $0.top.equalTo(moreLabel.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
@@ -148,7 +177,6 @@ class MilouVC: UIViewController {
         
         tableView.register(QuestionCell.self, forCellReuseIdentifier: QuestionCell.reuseIdentifier)
         tableView.register(AnswerCell.self, forCellReuseIdentifier: AnswerCell.reuseIdentifier)
-        
     }
     
     // 메시지를 하나씩 추가하면서 애니메이션
