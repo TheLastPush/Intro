@@ -126,7 +126,7 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
 		switch member.name {
 		case "조성준":
 			nextViewController = JuseojoVC()
-		case "양지영":
+		//case "양지영":
 			//nextViewController = MilouVC()
 		case "서광용":
 			nextViewController = MoriVC()
