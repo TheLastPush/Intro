@@ -40,19 +40,8 @@ final class MoriVC: UIViewController {
         super.viewDidLoad()
         setupLayout()
         setupStyle()
-        
-        nameLabel.text = "서광용"
-        mbtiLabel.text = "MBTI: INFJ"
-        introContentLabel.text = """
-            안녕하세요, 기록하고 정리해 공유하는 것을 
-            좋아하는 iOS 개발자 서광용입니다!
-            취미로는 사진을 찍으러 다닙니다. 📸 
-            """
-        collaborationContentLabel.text = "대화를 통해 유연하게 협업을 맞춰가며, 서로의 스타일을 존중하는 협업을 지향합니다."
-        
-        blogButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
-        gitHubButton.addTarget(self, action: #selector(gitHubButtonTapped), for: .touchUpInside)
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
+        setupData()
+        setupActions()
     }
     
     // MARK: - Layout
@@ -67,6 +56,18 @@ final class MoriVC: UIViewController {
         setupCollaborationLayout()
         setupBlogButtonLayout()
         setupGitHubButtonLayout()
+    }
+    
+    // MARK: - 데이터 세팅
+    private func setupData() {
+        nameLabel.text = "서광용"
+        mbtiLabel.text = "MBTI: INFJ"
+        introContentLabel.text = """
+            안녕하세요, 기록하고 정리해 공유하는 것을 
+            좋아하는 iOS 개발자 서광용입니다!
+            취미로는 사진을 찍으러 다닙니다. 📸 
+            """
+        collaborationContentLabel.text = "각자의 스타일을 이해하고, 함께 조율하여 맞춰나가려고 노력합니다. 😊"
     }
     
     // MARK: - 베이스 뷰 (스크롤 뷰 + 컨텐츠 뷰)
@@ -213,9 +214,15 @@ final class MoriVC: UIViewController {
         
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).offset(70)
-            make.leading.equalToSuperview().offset(16)
+            make.leading.equalToSuperview().offset(8)
             make.width.height.equalTo(44)
         }
+    }
+    
+    private func setupActions() {
+        blogButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
+        gitHubButton.addTarget(self, action: #selector(gitHubButtonTapped), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Style
@@ -264,11 +271,11 @@ final class MoriVC: UIViewController {
     
     // MARK: - 이름/MBTI 디자인
     private func setupNameStyle() {
-        nameLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 25)
+        nameLabel.font = UIFont.ibmPlexSansKR(size: 25, weight: .bold)
         nameLabel.textColor = .label
         
-        mbtiLabel.font = UIFont(name: "NunitoSans-VariableFont_YTLC", size: 17)
-        mbtiLabel.textColor = .secondaryLabel // 부재 설명 라벨 색
+        mbtiLabel.font = UIFont.nunitoSans(size: 17)
+        mbtiLabel.textColor = .secondaryLabel
     }
     
     // MARK: - Box View 디자인
@@ -282,10 +289,10 @@ final class MoriVC: UIViewController {
     // MARK: - 자기소개 디자인
     private func setupIntroStyle() {
         introTitleLabel.text = "자기소개"
-        introTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
+        introTitleLabel.font = UIFont.ibmPlexSansKR(size: 17, weight: .bold)
         introTitleLabel.textColor = .label
         
-        introContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
+        introContentLabel.font = UIFont.ibmPlexSansKR(size: 15)
         introContentLabel.textColor = .darkGray
         introContentLabel.numberOfLines = 0 // 줄 수 제한 없앰
         introContentLabel.lineBreakMode = .byWordWrapping // 단어 단위로 자연스럽게 줄 바꿈
@@ -294,12 +301,12 @@ final class MoriVC: UIViewController {
     // MARK: - 나의 장점 디자인
     private func setupStrengthStyle() {
         strengthTitleLabel.text = "나의 장점"
-        strengthTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
+        strengthTitleLabel.font = UIFont.ibmPlexSansKR(size: 17, weight: .bold)
         strengthTitleLabel.textColor = .label
         
         strengthStackView.axis = .horizontal // horizontal(수평 방향)
         strengthStackView.spacing = 10 // 뷰 사이의 인덱싱(공간)
-        strengthStackView.distribution = .fillProportionally // 고유한 크기의 비율을 기준으로 공간을 나눠줌. (40, 60, 100 -> 4:6:10 비율로)
+        strengthStackView.distribution = .fillProportionally // 고유한 크기의 비율로 나눔
         
         let strength1 = makeIconLabel(text: "💎 성실함")
         let strength2 = makeIconLabel(text: "📋 꼼꼼함")
@@ -313,10 +320,10 @@ final class MoriVC: UIViewController {
     // MARK: - 스타일 협업 디자인
     private func setupCollaborationStyle() {
         collaborationTitleLabel.text = "스타일 협업"
-        collaborationTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
+        collaborationTitleLabel.font = UIFont.ibmPlexSansKR(size: 17, weight: .bold)
         collaborationTitleLabel.textColor = .label
 
-        collaborationContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
+        collaborationContentLabel.font = UIFont.ibmPlexSansKR(size: 15)
         collaborationContentLabel.textColor = .darkGray
         collaborationContentLabel.numberOfLines = 0
         collaborationContentLabel.lineBreakMode = .byWordWrapping
@@ -327,23 +334,23 @@ final class MoriVC: UIViewController {
         blogButton.setTitle("블로그 보러가기", for: .normal)
         blogButton.setTitleColor(.white, for: .normal)
         blogButton.backgroundColor = .systemPurple
-        blogButton.titleLabel?.font = UIFont(name: "IBMPlexSansKR-Medium", size: 15)
+        blogButton.titleLabel?.font = UIFont.ibmPlexSansKR(size: 15, weight: .medium)
         blogButton.layer.cornerRadius = 8
     }
     
     // MARK: - GitHub 버튼 디자인
     private func setupGitHubButtonStyle() {
-        gitHubButton.setTitle("깃허브 보러가기", for: .normal) // .normal: 기본 상태
+        gitHubButton.setTitle("깃허브 보러가기", for: .normal)
         gitHubButton.setTitleColor(.white, for: .normal)
         gitHubButton.backgroundColor = .systemPurple
-        gitHubButton.titleLabel?.font = UIFont(name: "IBMPlexSansKR-Medium", size: 15)
+        gitHubButton.titleLabel?.font = UIFont.ibmPlexSansKR(size: 15, weight: .medium)
         gitHubButton.layer.cornerRadius = 8
     }
     
     // MARK: - UI 요소 생성
     private func makeIconLabel(text: String) -> UILabel {
         let label = UILabel()
-        label.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
+        label.font = UIFont.ibmPlexSansKR(size: 15)
         label.textColor = .darkGray
         label.text = text
         return label
