@@ -2,19 +2,18 @@
 //  MoriVC.swift
 //  theLastPush
 //
-//  Created by 지영 on 5/20/25.
+//  Created by 광용 on 5/21/25.
 //
 
 import SnapKit
 import UIKit
 
 final class MoriVC: UIViewController {
-    
-    
-    // MARK: - UI Components
     private let scrollView = UIScrollView() // 스크롤 가능한 화면을 만들기 위한 베이스 View
     private let contentView = UIView() // ScrollView안에 실제 콘텐츠를 넣는 뷰
     private let cardView = UIView() // 흰색 박스 View
+    
+    private let profileImageView = UIImageView()
     
     private let nameLabel = UILabel()
     private let mbtiLabel = UILabel()
@@ -57,6 +56,7 @@ final class MoriVC: UIViewController {
     private func setupLayout() {
         setupScrollViewLayout()
         setupCardViewLayout()
+        setupProfileImageLayout()
         setupNameLayout()
         setupIntroLayout()
         setupStrengthLayout()
@@ -86,9 +86,19 @@ final class MoriVC: UIViewController {
         contentView.addSubview(cardView) // 하얀색 박스 영역.
         
         cardView.snp.makeConstraints { make in // cardView의 제약 조건
-            make.top.equalTo(contentView).offset(130)
+            make.top.equalTo(contentView).offset(50)
             make.leading.trailing.equalTo(contentView).inset(20)
-            make.height.greaterThanOrEqualTo(600) // cardView의 임시 최소 높이 600pt (이미지나 콘텐츠가 늘어나면 자동으로 커짐)
+            make.bottom.equalTo(contentView).inset(20)
+        }
+    }
+    
+    //MARK: - 프로필 이미지
+    private func setupProfileImageLayout() {
+        cardView.addSubview(profileImageView)
+        profileImageView.snp.makeConstraints { make in
+            make.top.equalTo(cardView).offset(24)
+            make.centerX.equalTo(cardView)
+            make.width.height.equalTo(100)
         }
     }
     
@@ -98,13 +108,13 @@ final class MoriVC: UIViewController {
         cardView.addSubview(mbtiLabel)
         
         nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(cardView).offset(24)
-            make.leading.equalTo(cardView).offset(16)
+            make.top.equalTo(profileImageView.snp.bottom).offset(12)
+            make.centerX.equalTo(cardView)
         }
         
         mbtiLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(8)
-            make.leading.equalTo(nameLabel)
+            make.top.equalTo(nameLabel.snp.bottom).offset(4)
+            make.centerX.equalTo(cardView)
         }
     }
     
@@ -196,6 +206,7 @@ final class MoriVC: UIViewController {
     private func setupStyle() {
         setupBaseStyle()
         setupCardViewStyle()
+        setupProfileImageStyle()
         setupNameStyle()
         setupIntroStyle()
         setupStrengthStyle()
@@ -215,6 +226,13 @@ final class MoriVC: UIViewController {
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 16
         cardView.layer.masksToBounds = true // 자식 뷰가 둥근 테두리 밖으로 빠져나가면 잘라서 보이지 않도록 함
+    }
+    
+    private func setupProfileImageStyle() {
+        profileImageView.image = UIImage(named: "member2")
+        profileImageView.layer.cornerRadius = 50
+        profileImageView.clipsToBounds = true // 이미지 뷰의 프레임을 벗어나는 부분을 잘라냄
+        profileImageView.contentMode = .scaleAspectFill //
     }
     
     private func setupNameStyle() {
