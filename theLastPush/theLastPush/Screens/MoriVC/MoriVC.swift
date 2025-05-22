@@ -90,7 +90,7 @@ final class MoriVC: UIViewController {
         contentView.addSubview(cardView) // 하얀색 박스 영역
         
         cardView.snp.makeConstraints { make in // cardView의 제약 조건
-            make.top.equalTo(contentView).offset(50)
+            make.top.equalTo(contentView).offset(100)
             make.leading.trailing.equalTo(contentView).inset(20)
             make.bottom.equalTo(contentView).inset(20)
         }
@@ -100,8 +100,8 @@ final class MoriVC: UIViewController {
     private func setupProfileImageLayout() {
         cardView.addSubview(profileImageView)
         profileImageView.snp.makeConstraints { make in
-            make.top.equalTo(cardView).offset(24)
             make.centerX.equalTo(cardView)
+            make.centerY.equalTo(cardView.snp.top) // 수직(Y축) 중앙선을 cardView의 top에 맞춤
             make.width.height.equalTo(100)
         }
     }
@@ -258,7 +258,6 @@ final class MoriVC: UIViewController {
     private func setupCardViewStyle() {
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 16
-        cardView.layer.masksToBounds = true // 자식 뷰가 둥근 테두리 밖으로 빠져나가면 잘라서 보이지 않도록 함
     }
     
     // MARK: - 프로필 이미지 디자인
