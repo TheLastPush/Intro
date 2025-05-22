@@ -90,12 +90,12 @@ class PuddingVC: UIViewController {
         }
         // 제목 라벨
         titleLabel.text = "Personal Page"
-        titleLabel.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 24)
+        titleLabel.font = UIFont.nunitoSans(size: 24, weight: .black)
         titleLabel.textAlignment = .center
         
         // 이름 라벨
         subtitleLabel.text = pudding.name
-        subtitleLabel.font = UIFont(name: "IBMPlexSansKR-Medium", size: 17)
+        subtitleLabel.font = UIFont.ibmPlexSansKR(size: 17, weight: .bold)
         subtitleLabel.textAlignment = .center
         
         // 화면에 추가
@@ -122,12 +122,12 @@ class PuddingVC: UIViewController {
 
         // 소개 제목 라벨
         aboutMeTitleLabel.text = "About Me"
-        aboutMeTitleLabel.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 20)
+        aboutMeTitleLabel.font = UIFont.nunitoSans(size: 24, weight: .black)
         aboutMeTitleLabel.textAlignment = .left
 
         // 소개 내용 라벨
         aboutMeContentLabel.text = pudding.description
-        aboutMeContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
+        aboutMeContentLabel.font = UIFont.ibmPlexSansKR(size: 17)
         aboutMeContentLabel.numberOfLines = 0
         aboutMeContentLabel.textAlignment = .left
         
@@ -162,7 +162,7 @@ class PuddingVC: UIViewController {
         
         // 장점 제목 라벨
         strengthsTitleLabel.text = "Strengths"
-        strengthsTitleLabel.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 20)
+        strengthsTitleLabel.font = UIFont.nunitoSans(size: 24, weight: .black)
         strengthsTitleLabel.textAlignment = .left
         
         // 수직 스택뷰 설정
@@ -182,7 +182,7 @@ class PuddingVC: UIViewController {
             // 장점 라벨
             let label = UILabel()
             label.text = String(item)
-            label.font = UIFont(name: "IBMPlexSansKR-Reqular", size: 15)
+            label.font = UIFont.ibmPlexSansKR(size: 16)
             
             //수평 스택 뷰로 묶기
             let hStack = UIStackView(arrangedSubviews: [iconImageView, label])
@@ -244,12 +244,12 @@ class PuddingVC: UIViewController {
 
         // 협업 스타일 제목 라벨
         collabTitleLabel.text = "Collaboration"
-        collabTitleLabel.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 24)
+        collabTitleLabel.font = UIFont.nunitoSans(size: 24, weight: .black)
         collabTitleLabel.textAlignment = .left
 
         // 협업 스타일 내용 라벨
         collabContentLabel.text = pudding.collaborationStyle
-        collabContentLabel.font = UIFont(name: "IBMPlexSansKR-Reqular", size: 15)
+        collabContentLabel.font = UIFont.ibmPlexSansKR(size: 16)
         collabContentLabel.textAlignment = .left
         collabContentLabel.numberOfLines = 0
         
