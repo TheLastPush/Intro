@@ -40,6 +40,7 @@ class MilouVC: UIViewController {
     private let tistoryButton = UIButton()
     private let introContainerView = UIView()
     private let introLabel = UILabel()
+    private let moreLabel = UILabel()
     private let tableView = UITableView()
     private var messages: [Message] = []
     
@@ -109,9 +110,17 @@ class MilouVC: UIViewController {
             $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
         }
         
+        view.addSubview(moreLabel)
+        moreLabel.text = "🔎 더 알아보기"
+        moreLabel.font = UIFont.ibmPlexSansKR(size: 18, weight: .bold)
+        moreLabel.snp.makeConstraints {
+            $0.top.equalTo(introContainerView.snp.bottom).offset(32)
+            $0.leading.equalToSuperview().inset(20)
+        }
+        
         view.addSubview(tableView)
         tableView.snp.makeConstraints {
-            $0.top.equalTo(introContainerView.snp.bottom).offset(24)
+            $0.top.equalTo(moreLabel.snp.bottom).offset(16)
             $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
         }
     }
