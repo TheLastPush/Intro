@@ -242,7 +242,7 @@ final class MoriVC: UIViewController {
     
     // MARK: - 베이스 디자인(스크롤 뷰 + 컨텐츠 뷰)
     private func setupBaseStyle() {
-        view.backgroundColor = .introPurple
+        view.backgroundColor = .systemGroupedBackground
         scrollView.backgroundColor = .clear
         contentView.backgroundColor = .clear
     }
