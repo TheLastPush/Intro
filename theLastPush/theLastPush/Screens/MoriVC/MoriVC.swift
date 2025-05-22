@@ -191,7 +191,7 @@ final class MoriVC: UIViewController {
         cardView.addSubview(blogButton)
         
         blogButton.snp.makeConstraints { make in // 블로그 버튼 제약조건
-            make.top.equalTo(collaborationContentLabel.snp.bottom).offset(35)
+            make.top.equalTo(collaborationBoxView.snp.bottom).offset(18)
             make.leading.trailing.equalTo(cardView).inset(16)
             make.height.equalTo(44)
         }
@@ -266,7 +266,7 @@ final class MoriVC: UIViewController {
         profileImageView.image = UIImage(named: "member2")
         profileImageView.layer.cornerRadius = 50
         profileImageView.clipsToBounds = true // 이미지 뷰의 프레임을 벗어나는 부분을 잘라냄
-        profileImageView.contentMode = .scaleAspectFill //
+        profileImageView.contentMode = .scaleAspectFill // 이미지 비율을 유지하며, 크기에 가득 채우는 방식
     }
     
     // MARK: - 이름/MBTI 디자인
