@@ -42,7 +42,9 @@ class MilouVC: UIViewController {
     private let introLabel = UILabel()
     private let moreLabel = UILabel()
     private let tableView = UITableView()
+    private var allMessages: [Message] = []
     private var messages: [Message] = []
+    private var hasAnimated: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +54,27 @@ class MilouVC: UIViewController {
     }
     
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+//        animateMessagesOneByOne()
+
+        // 애니메이션이 한 번만 실행되도록
+        if !hasAnimated {
+            startMessageAnimation()
+            hasAnimated = true
+        }
+    }
+    
+    
     private func setupMessageData() {
-        messages = [
+        allMessages = [
             Message(text: "지영의 장점은?", type: .question),
             Message(text: milou.strength, type: .answer),
             Message(text: "협업할땐 어떤 스타일이야?", type: .question),
             Message(text: milou.collaborationStyle, type: .answer)
         ]
+        
+        messages = []
     }
     
     private func setupUI() {
@@ -67,10 +83,11 @@ class MilouVC: UIViewController {
         view.addSubview(backButton)
         backButton.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
         backButton.tintColor = .black
+        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
         backButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(8)
+            $0.top.equalTo(view.safeAreaLayoutGuide).offset(6)
             $0.leading.equalToSuperview().offset(16)
-            $0.width.height.equalTo(24)
+            $0.width.height.equalTo(44)
         }
         
         view.addSubview(nameLabel)
@@ -139,8 +156,49 @@ class MilouVC: UIViewController {
         
     }
     
+    // 메시지를 하나씩 추가하면서 애니메이션
+    private func startMessageAnimation() {
+        for (index, message) in allMessages.enumerated() {
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(index) * 0.8) {
+                self.addMessage(message)
+            }
+        }
+    }
+    
+    private func addMessage(_ message: Message) {
+        messages.append(message)
+        
+        let indexPath = IndexPath(row: messages.count - 1, section: 0)
+        
+        // 테이블뷰에 새 셀 추가
+        tableView.insertRows(at: [indexPath], with: .none)
+        tableView.layoutIfNeeded()
+        
+        // 새로 추가된 셀에 애니메이션 적용
+        DispatchQueue.main.async {
+            if let cell = self.tableView.cellForRow(at: indexPath) {
+                // 초기 상태: 아래에서 시작
+                cell.transform = CGAffineTransform(translationX: 0, y: 50)
+                cell.alpha = 0
+                
+                // 애니메이션으로 원래 위치로
+                UIView.animate(
+                    withDuration: 0.5,
+                    delay: 0,
+                    usingSpringWithDamping: 0.8,
+                    initialSpringVelocity: 0.8,
+                    options: .curveEaseOut,
+                    animations: {
+                        cell.transform = .identity
+                        cell.alpha = 1.0
+                    }
+                )
+            }
+        }
+    }
+    
     @objc private func backButtonTapped() {
-        navigationController?.popViewController(animated: true)
+        self.navigationController?.popViewController(animated: true)
     }
     
     @objc private func blogButtonTapped() {
@@ -151,7 +209,6 @@ class MilouVC: UIViewController {
         safariVC.dismissButtonStyle = .close
         present(safariVC, animated: true, completion: nil)
     }
-
 }
 
 extension MilouVC: UITableViewDataSource, UITableViewDelegate {
