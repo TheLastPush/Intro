@@ -9,69 +9,14 @@ import UIKit
 import SafariServices
 import SnapKit
 
-enum MessageType {
-    case question
-    case answer
-}
-
-struct Message {
-    let text: String
-    let type: MessageType
-}
-
 class MilouVC: UIViewController {
-    
     private let member: Member
     private var hasAnimated: Bool = false
-
-    private let tableView: ChattingTableView
-    
-    private let backButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(systemName: "arrow.backward"), for: .normal)
-        button.tintColor = .black
-        return button
-    }()
-    
-    private let nameLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.ibmPlexSansKR(size: 32, weight: .black)
-        return label
-    }()
-    
-    private let tistoryButton: UIButton = {
-        let button = UIButton()
-        button.setImage(UIImage(named: "tistory"), for: .normal)
-        button.tintColor = .systemRed
-        return button
-    }()
-    
-    private let introContainerView: UIView = {
-        let view = UIView()
-        view.backgroundColor = .white
-        view.layer.cornerRadius = 10
-        return view
-    }()
-    
-    private let introLabel: UILabel = {
-        let label = UILabel()
-        label.font =  UIFont.ibmPlexSansKR(size: 16)
-        label.numberOfLines = 0
-        label.textColor = .darkGray
-        return label
-    }()
-    
-    private let moreLabel: UILabel = {
-        let label = UILabel()
-        label.text = "🔎 더 알아보기"
-        label.font = UIFont.ibmPlexSansKR(size: 18, weight: .bold)
-        return label
-    }()
-    
+    private let milouView: MilouView
     
     init(member: Member) {
         self.member = member
-        self.tableView = ChattingTableView(member: member)
+        self.milouView = MilouView(member: member)
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -81,83 +26,33 @@ class MilouVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        configure()
         setupView()
-        setupConstraints()
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         if !hasAnimated {
-            tableView.startMessageAnimation()
+            milouView.startMessageAnimation()
             hasAnimated = true
         }
     }
     
-    private func configure() {
-        nameLabel.text = member.name
-        introLabel.text = member.description
-    }
-    
     private func setupView() {
-        view.addSubview(backButton)
-        view.addSubview(nameLabel)
-        view.addSubview(tistoryButton)
-        view.addSubview(introContainerView)
-        introContainerView.addSubview(introLabel)
-        view.addSubview(moreLabel)
-        view.addSubview(tableView)
+        view.addSubview(milouView)
+        milouView.delegate = self
         
-        backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
-        tistoryButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
-        
-        view.backgroundColor = UIColor.backgroundRed
-    }
-    
-    
-    private func setupConstraints() {
-        backButton.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide).offset(6)
-            $0.leading.equalToSuperview().offset(16)
-            $0.width.height.equalTo(44)
-        }
-        
-        nameLabel.snp.makeConstraints {
-            $0.top.equalTo(backButton.snp.bottom).offset(40)
-            $0.leading.equalToSuperview().offset(20)
-        }
-        
-        tistoryButton.snp.makeConstraints {
-            $0.centerY.equalTo(nameLabel)
-            $0.leading.equalTo(nameLabel.snp.trailing).offset(16)
-            $0.width.height.equalTo(40)
-        }
-        
-        introContainerView.snp.makeConstraints {
-            $0.top.equalTo(nameLabel.snp.bottom).offset(20)
-            $0.leading.trailing.equalToSuperview().inset(20)
-        }
-        
-        introLabel.snp.makeConstraints {
-            $0.edges.equalToSuperview().inset(UIEdgeInsets(top: 12, left: 16, bottom: 12, right: 16))
-        }
-        
-        moreLabel.snp.makeConstraints {
-            $0.top.equalTo(introContainerView.snp.bottom).offset(32)
-            $0.leading.equalToSuperview().inset(20)
-        }
-        
-        tableView.snp.makeConstraints {
-            $0.top.equalTo(moreLabel.snp.bottom).offset(16)
-            $0.leading.trailing.bottom.equalTo(view.safeAreaLayoutGuide)
+        milouView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
     }
-    
-    @objc private func backButtonTapped() {
+}
+
+extension MilouVC: MilouViewButtonDelegate {
+    func backButtonTapped() {
         self.navigationController?.popViewController(animated: true)
     }
     
-    @objc private func blogButtonTapped() {
+    func blogButtonTapped() {
         guard let url = URL(string: member.blogURL) else { return }
         
         let safariVC = SFSafariViewController(url: url)
@@ -166,5 +61,3 @@ class MilouVC: UIViewController {
         present(safariVC, animated: true, completion: nil)
     }
 }
-
-
