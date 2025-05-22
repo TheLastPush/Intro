@@ -113,29 +113,33 @@ extension MainVC: UICollectionViewDataSource {
         return cell
     }
     
+   
+}
+
+extension MainVC: UICollectionViewDelegate {
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let member = members[indexPath.item]
-		var nextViewController: UIViewController
+        var nextViewController: UIViewController
         print("\(member.name) 페이지로 이동!")
 
-		switch member.name {
-		case "조성준":
-			nextViewController = JuseojoVC()
-		case "양지영":
+        switch member.name {
+        case "조성준":
+            nextViewController = JuseojoVC()
+        case "양지영":
             guard let milou = members.first(where: { $0.name == "양지영" }) else {
                     print("못찾음")
                     return
                 }
             nextViewController = MilouVC(member: milou)
-		case "서광용":
-			nextViewController = MoriVC()
-		case "이태윤":
-			nextViewController = PuddingVC()
-		default:
-			nextViewController = JuseojoVC()
-		}
+        case "서광용":
+            nextViewController = MoriVC()
+        case "이태윤":
+            nextViewController = PuddingVC()
+        default:
+            nextViewController = JuseojoVC()
+        }
         
-		self.navigationController?.pushViewController(nextViewController, animated: true)
+        self.navigationController?.pushViewController(nextViewController, animated: true)
     }
 }
 
@@ -146,5 +150,4 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
     }
 }
 
-extension MainVC: UICollectionViewDelegate {
-}
+
