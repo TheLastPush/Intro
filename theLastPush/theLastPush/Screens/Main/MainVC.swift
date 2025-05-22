@@ -126,8 +126,12 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
 		switch member.name {
 		case "조성준":
 			nextViewController = JuseojoVC()
-		//case "양지영":
-			//nextViewController = MilouVC()
+		case "양지영":
+            guard let milou = members.first(where: { $0.name == "양지영" }) else {
+                    print("못찾음")
+                    return
+                }
+            nextViewController = MilouVC(member: milou)
 		case "서광용":
 			nextViewController = MoriVC()
 		case "이태윤":
