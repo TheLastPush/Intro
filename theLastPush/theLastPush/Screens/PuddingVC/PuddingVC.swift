@@ -9,22 +9,15 @@ import UIKit
 import SnapKit
 
 class PuddingVC: UIViewController {
-    struct Member {
-        let name: String
-        let profileImage: String
-        let mbti: String
-        let description: String
-        let strength: String
-        let collaborationStyle: String
-        let blogURL: String
-    }
-    var pudding = Member(name: "이태윤",
+    
+    let pudding = Member(name: "이태윤",
                          profileImage: "pudding",
                          mbti: "ENFP",
                          description: "안녕하세요 저는 부산에 거주중인 2000년생 이태윤 이라고 합니다.",
                          strength: "밝은에너지 책임감 문제해결적 호기심",
                          collaborationStyle: "긍정적인 태도로 팀 분위기를 밝게 만들고,협력을 통해 함께 문제를 해결하며 성장해 나가는 것을 중요하게 생각합니다. 작은 의견도 소중히 여기고 경청하며, 서로를 존중하고 신뢰를 바탕으로 안정감 있는 팀워크를 만들어 갑니다.",
-                         blogURL: "https://github.com/Lee-Tae-Yun")
+                         blogURL: "https://github.com/Lee-Tae-Yun",
+                         backgroundColor: .white)
     
     // 프로필 사진, 이름
     let profileImageView = UIImageView()
@@ -51,7 +44,7 @@ class PuddingVC: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .white
+        view.backgroundColor = pudding.backgroundColor
         
         backButton.setImage(UIImage(named: "tyback"), for: .normal)
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
@@ -142,12 +135,12 @@ class PuddingVC: UIViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
 
-        aboutMeTitleLabel.snp.remakeConstraints { make in
+        aboutMeTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
 
-        aboutMeContentLabel.snp.remakeConstraints { make in
+        aboutMeContentLabel.snp.makeConstraints { make in
             make.top.equalTo(aboutMeTitleLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(16)
@@ -212,18 +205,18 @@ class PuddingVC: UIViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
 
-        strengthsTitleLabel.snp.remakeConstraints { make in
+        strengthsTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
 
-        strengthsStackView.snp.remakeConstraints { make in
+        strengthsStackView.snp.makeConstraints { make in
             make.top.equalTo(strengthsTitleLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(16)
         }
         // 깃허브 버튼 배치
-        blogButton.snp.remakeConstraints { make in
+        blogButton.snp.makeConstraints { make in
             make.trailing.equalToSuperview().inset(12)
             make.bottom.equalToSuperview().inset(12)
             make.width.height.equalTo(32)
@@ -264,12 +257,12 @@ class PuddingVC: UIViewController {
             make.leading.trailing.equalToSuperview().inset(24)
         }
 
-        collabTitleLabel.snp.remakeConstraints { make in
+        collabTitleLabel.snp.makeConstraints { make in
             make.top.equalToSuperview().offset(16)
             make.leading.trailing.equalToSuperview().inset(16)
         }
 
-        collabContentLabel.snp.remakeConstraints { make in
+        collabContentLabel.snp.makeConstraints { make in
             make.top.equalTo(collabTitleLabel.snp.bottom).offset(10)
             make.leading.trailing.equalToSuperview().inset(16)
             make.bottom.equalToSuperview().inset(16)
