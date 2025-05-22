@@ -15,7 +15,7 @@ class MainVC: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "THE LAST PUSH"
-        label.font = UIFont(name: "NunitoSans-12ptExtraLight_Black", size: 36)
+        label.font = UIFont.ibmPlexSansKR(size: 36, weight: .black)
         label.textColor = .black
         label.textAlignment = .center
         label.shadowColor = UIColor(white: 0, alpha: 0.2)
@@ -57,48 +57,44 @@ class MainVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        setupView()
+        setupConstraints()
+        
         view.backgroundColor = .white
-        setupUI()
     }
     
-    private func setupUI()  {
-        setupTitleLabel()
-        setupIntroButton()
-        setUpMembersCollectionView()
-    }
-    
-    private func setupTitleLabel() {
+    private func setupView()  {
         view.addSubview(titleLabel)
-        titleLabel.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(56)
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(24)
-        }
+        view.addSubview(introButton)
+        view.addSubview(membersCollectionView)
     }
     
-    private func setupIntroButton() {
-        view.addSubview(introButton)
-        introButton.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(50)
-            make.centerX.equalToSuperview()
-            make.width.equalTo(200)
-            make.height.equalTo(60)
+    private func setupConstraints() {
+        titleLabel.snp.makeConstraints {
+            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(56)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(24)
+        }
+        
+        introButton.snp.makeConstraints {
+            $0.top.equalTo(titleLabel.snp.bottom).offset(50)
+            $0.centerX.equalToSuperview()
+            $0.width.equalTo(200)
+            $0.height.equalTo(60)
         }
         
         introButton.addTarget(self, action: #selector(introButtonTapped), for: .touchUpInside)
     }
     
+    
     private func setUpMembersCollectionView() {
-        view.addSubview(membersCollectionView)
-        membersCollectionView.snp.makeConstraints { make in
-            make.top.equalTo(introButton.snp.bottom).offset(60)
-            make.leading.trailing.equalToSuperview().inset(20)
-            make.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
+        membersCollectionView.snp.makeConstraints {
+            $0.top.equalTo(introButton.snp.bottom).offset(60)
+            $0.leading.trailing.equalToSuperview().inset(20)
+            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
         }
     }
     
-    // TODO: 온보딩으로 이동
     @objc private func introButtonTapped() {
         let vc = OnboardingVC()
         vc.modalPresentationStyle = .fullScreen
@@ -106,7 +102,7 @@ class MainVC: UIViewController {
     }
 }
 
-extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
+extension MainVC: UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return members.count
     }
@@ -117,7 +113,6 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
         return cell
     }
     
-    // TODO: 멤버 페이지로 이동
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let member = members[indexPath.item]
 		var nextViewController: UIViewController
@@ -139,11 +134,9 @@ extension MainVC: UICollectionViewDelegate, UICollectionViewDataSource {
 		default:
 			nextViewController = JuseojoVC()
 		}
-
-
+        
 		self.navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
 }
 
 extension MainVC: UICollectionViewDelegateFlowLayout {
@@ -151,4 +144,7 @@ extension MainVC: UICollectionViewDelegateFlowLayout {
         let width = (collectionView.frame.width - 20) / 2
         return CGSize(width: width, height: width * 1.3)
     }
+}
+
+extension MainVC: UICollectionViewDelegate {
 }
