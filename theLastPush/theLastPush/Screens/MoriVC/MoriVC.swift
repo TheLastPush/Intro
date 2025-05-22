@@ -46,18 +46,19 @@ final class MoriVC: UIViewController {
         introContentLabel.text = """
             안녕하세요, 기록하고 정리해 공유하는 것을 
             좋아하는 iOS 개발자 서광용입니다!
+            취미로는 사진을 찍으러 다닙니다. 📸 
             """
         collaborationContentLabel.text = "대화를 통해 유연하게 협업을 맞춰가며, 서로의 스타일을 존중하는 협업을 지향합니다."
         
         blogButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
         gitHubButton.addTarget(self, action: #selector(gitHubButtonTapped), for: .touchUpInside)
-        
         backButton.addTarget(self, action: #selector(backButtonTapped), for: .touchUpInside)
     }
     
     // MARK: - Layout
     private func setupLayout() {
-        setupScrollViewLayout()
+        setupBaseLayout()
+        setupBackButtonLayout()
         setupCardViewLayout()
         setupProfileImageLayout()
         setupNameLayout()
@@ -66,11 +67,10 @@ final class MoriVC: UIViewController {
         setupCollaborationLayout()
         setupBlogButtonLayout()
         setupGitHubButtonLayout()
-        setupBackButtonLayout()
     }
     
-    // MARK: - 스크롤 뷰 + 콘텐츠 뷰
-    private func setupScrollViewLayout() {
+    // MARK: - 베이스 뷰 (스크롤 뷰 + 컨텐츠 뷰)
+    private func setupBaseLayout() {
         view.addSubview(scrollView)
         scrollView.addSubview(contentView)
         
@@ -86,7 +86,7 @@ final class MoriVC: UIViewController {
     }
     // MARK: - 카드 뷰
     private func setupCardViewLayout() {
-        contentView.addSubview(cardView) // 하얀색 박스 영역.
+        contentView.addSubview(cardView) // 하얀색 박스 영역
         
         cardView.snp.makeConstraints { make in // cardView의 제약 조건
             make.top.equalTo(contentView).offset(50)
@@ -128,13 +128,11 @@ final class MoriVC: UIViewController {
         introBoxView.addSubview(introContentLabel)
         
         introBoxView.snp.makeConstraints { make in
-            make.top.equalTo(mbtiLabel.snp.bottom).offset(20)
+            make.top.equalTo(mbtiLabel.snp.bottom).offset(15)
             make.leading.trailing.equalTo(cardView).inset(16)
         }
         
         introTitleLabel.snp.makeConstraints { make in
-//            make.top.equalTo(mbtiLabel.snp.bottom).offset(24)
-//            make.leading.trailing.equalTo(cardView).inset(16)
             make.top.leading.trailing.equalToSuperview().inset(12)
         }
         
@@ -151,20 +149,18 @@ final class MoriVC: UIViewController {
         strengthBoxView.addSubview(strengthStackView)
         
         strengthBoxView.snp.makeConstraints { make in
-            make.top.equalTo(introBoxView.snp.bottom).offset(20)
+            make.top.equalTo(introBoxView.snp.bottom).offset(15)
             make.leading.trailing.equalTo(cardView).inset(16)
         }
         
         strengthTitleLabel.snp.makeConstraints { make in // 나의 장점 title 제약조건
-//            make.top.equalTo(introContentLabel.snp.bottom).offset(24)
-//            make.leading.equalTo(cardView).offset(16)
             make.top.leading.trailing.equalToSuperview().inset(12)
         }
         
         strengthStackView.snp.makeConstraints { make in // 나의 장점 키워드와 아이콘
             make.top.equalTo(strengthTitleLabel.snp.bottom).offset(12)
             make.leading.trailing.bottom.equalToSuperview().inset(16)
-            make.height.equalTo(24) // StackView라서 높이 명시
+            make.height.equalTo(24)
         }
     }
     
@@ -175,18 +171,16 @@ final class MoriVC: UIViewController {
         collaborationBoxView.addSubview(collaborationContentLabel)
         
         collaborationBoxView.snp.makeConstraints { make in
-            make.top.equalTo(strengthBoxView.snp.bottom).offset(20)
+            make.top.equalTo(strengthBoxView.snp.bottom).offset(15)
             make.leading.trailing.equalTo(cardView).inset(16)
         }
         
         collaborationTitleLabel.snp.makeConstraints { make in // 스타일 협업 title 제약조건
-//            make.top.equalTo(strengthStackView.snp.bottom).offset(24)
-//            make.leading.equalTo(cardView).offset(16)
             make.top.leading.trailing.equalToSuperview().inset(12)
         }
         
         collaborationContentLabel.snp.makeConstraints { make in // 스타일 협업 내용 제약조건
-            make.top.equalTo(collaborationTitleLabel.snp.bottom).offset(12) // 8?
+            make.top.equalTo(collaborationTitleLabel.snp.bottom).offset(12)
             make.leading.trailing.bottom.equalToSuperview().inset(16)
         }
     }
@@ -207,7 +201,7 @@ final class MoriVC: UIViewController {
         cardView.addSubview(gitHubButton)
         
         gitHubButton.snp.makeConstraints { make in
-            make.top.equalTo(blogButton.snp.bottom).offset(12)
+            make.top.equalTo(blogButton.snp.bottom).offset(8)
             make.leading.trailing.equalTo(cardView).inset(16)
             make.height.equalTo(44)
         }
@@ -220,15 +214,14 @@ final class MoriVC: UIViewController {
         backButton.snp.makeConstraints { make in
             make.top.equalTo(view).offset(70)
             make.leading.equalToSuperview().offset(16)
-            make.width.height.equalTo(44) // HIG 기준 44x44pt
+            make.width.height.equalTo(44)
         }
     }
-    
-    
     
     // MARK: - Style
     private func setupStyle() {
         setupBaseStyle()
+        setupBackButtonStyle()
         setupCardViewStyle()
         setupProfileImageStyle()
         setupNameStyle()
@@ -238,24 +231,30 @@ final class MoriVC: UIViewController {
         setupCollaborationStyle()
         setupBlogButtonStyle()
         setupGitHubButtonStyle()
-        setupBackButtonStyle()
-        
-        
-
     }
     
+    // MARK: - 베이스 디자인(스크롤 뷰 + 컨텐츠 뷰)
     private func setupBaseStyle() {
         view.backgroundColor = .introPurple
         scrollView.backgroundColor = .clear
         contentView.backgroundColor = .clear
     }
     
+    // MARK: - 뒤로가기 버튼 디자인
+    private func setupBackButtonStyle() {
+        let image = UIImage(systemName: "chevron.left")
+        backButton.setImage(image, for: .normal)
+        backButton.tintColor = .label
+    }
+    
+    // MARK: - 카드 뷰 디자인
     private func setupCardViewStyle() {
         cardView.backgroundColor = .white
         cardView.layer.cornerRadius = 16
         cardView.layer.masksToBounds = true // 자식 뷰가 둥근 테두리 밖으로 빠져나가면 잘라서 보이지 않도록 함
     }
     
+    // MARK: - 프로필 이미지 디자인
     private func setupProfileImageStyle() {
         profileImageView.image = UIImage(named: "member2")
         profileImageView.layer.cornerRadius = 50
@@ -263,6 +262,7 @@ final class MoriVC: UIViewController {
         profileImageView.contentMode = .scaleAspectFill //
     }
     
+    // MARK: - 이름/MBTI 디자인
     private func setupNameStyle() {
         nameLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 25)
         nameLabel.textColor = .label
@@ -271,6 +271,7 @@ final class MoriVC: UIViewController {
         mbtiLabel.textColor = .secondaryLabel // 부재 설명 라벨 색
     }
     
+    // MARK: - Box View 디자인
     private func setupBoxStyle() {
         [introBoxView, strengthBoxView, collaborationBoxView].forEach {
             $0.backgroundColor = .systemGray6
@@ -278,6 +279,7 @@ final class MoriVC: UIViewController {
         }
     }
     
+    // MARK: - 자기소개 디자인
     private func setupIntroStyle() {
         introTitleLabel.text = "자기소개"
         introTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
@@ -289,6 +291,7 @@ final class MoriVC: UIViewController {
         introContentLabel.lineBreakMode = .byWordWrapping // 단어 단위로 자연스럽게 줄 바꿈
     }
     
+    // MARK: - 나의 장점 디자인
     private func setupStrengthStyle() {
         strengthTitleLabel.text = "나의 장점"
         strengthTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
@@ -307,11 +310,11 @@ final class MoriVC: UIViewController {
         // addArrangedSubview: addSubView에서, StackView가 직접 위치와 크기를 자동으로 정렬
     }
     
+    // MARK: - 스타일 협업 디자인
     private func setupCollaborationStyle() {
         collaborationTitleLabel.text = "스타일 협업"
         collaborationTitleLabel.font = UIFont(name: "IBMPlexSansKR-Bold", size: 17)
         collaborationTitleLabel.textColor = .label
-        
 
         collaborationContentLabel.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
         collaborationContentLabel.textColor = .darkGray
@@ -319,6 +322,7 @@ final class MoriVC: UIViewController {
         collaborationContentLabel.lineBreakMode = .byWordWrapping
     }
     
+    // MARK: - Blog 버튼 디자인
     private func setupBlogButtonStyle() {
         blogButton.setTitle("블로그 보러가기", for: .normal)
         blogButton.setTitleColor(.white, for: .normal)
@@ -327,20 +331,16 @@ final class MoriVC: UIViewController {
         blogButton.layer.cornerRadius = 8
     }
     
+    // MARK: - GitHub 버튼 디자인
     private func setupGitHubButtonStyle() {
-        gitHubButton.setTitle("깃허브 보러가기", for: .normal) // .normal: 기본 상태(아무것도 안하고 있는)
+        gitHubButton.setTitle("깃허브 보러가기", for: .normal) // .normal: 기본 상태
         gitHubButton.setTitleColor(.white, for: .normal)
         gitHubButton.backgroundColor = .systemPurple
         gitHubButton.titleLabel?.font = UIFont(name: "IBMPlexSansKR-Medium", size: 15)
         gitHubButton.layer.cornerRadius = 8
     }
     
-    private func setupBackButtonStyle() {
-        let image = UIImage(systemName: "chevron.left")
-        backButton.setImage(image, for: .normal)
-        backButton.tintColor = .label
-    }
-    
+    // MARK: - UI 요소 생성
     private func makeIconLabel(text: String) -> UILabel {
         let label = UILabel()
         label.font = UIFont(name: "IBMPlexSansKR-Regular", size: 15)
@@ -349,18 +349,19 @@ final class MoriVC: UIViewController {
         return label
     }
     
-    // MARK: - BlogButtonAction
+    // MARK: - Blog 버튼 액션
     @objc private func blogButtonTapped() {
         guard let url = URL(string: "https://jud00.tistory.com/") else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil) // url 열기
     }
     
-    // MARK: - GitHubButtonAction
+    // MARK: - GitHub 버튼 액션
     @objc private func gitHubButtonTapped() {
         guard let url = URL(string: "https://github.com/Gwangyong") else { return }
         UIApplication.shared.open(url, options: [:], completionHandler: nil)
     }
     
+    // MARK: - back 버튼 액션
     @objc private func backButtonTapped() {
         navigationController?.popViewController(animated: true)
     }
