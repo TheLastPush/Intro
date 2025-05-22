@@ -8,44 +8,55 @@
 import UIKit
 
 class AnswerCell: UITableViewCell {
-
     static let reuseIdentifier = "AnswerCell"
     
-    private let profileImageView = UIImageView()
-    private let messageLabel = UILabel()
-    private let chattingView = UIView()
+    private let profileImageView: UIImageView = {
+        let imageView = UIImageView()
+        imageView.clipsToBounds = true
+        imageView.contentMode = .scaleAspectFill
+        return imageView
+    }()
+    
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.font = UIFont.ibmPlexSansKR(size: 15)
+        label.textColor = .black
+        label.numberOfLines = 0
+        return label
+    }()
+    
+    private let chattingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner ]
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.answerRed.cgColor
+        return view
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
-        
+        setupView()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
 
-    private func setupUI() {
-        backgroundColor = .clear
-        selectionStyle = .none
-        
-        profileImageView.clipsToBounds = true
-        profileImageView.contentMode = .scaleAspectFill
+    private func setupView() {
         contentView.addSubview(profileImageView)
-        
-        chattingView.backgroundColor = .white
-        chattingView.clipsToBounds = true
-        chattingView.layer.cornerRadius = 20
-        chattingView.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner ]
-        chattingView.layer.borderWidth = 2
-        chattingView.layer.borderColor = UIColor.answerRed.cgColor
         contentView.addSubview(chattingView)
-        
-        messageLabel.numberOfLines = 0
-        messageLabel.textColor = .black
-        messageLabel.font = UIFont.ibmPlexSansKR(size: 15)
         chattingView.addSubview(messageLabel)
         
+        backgroundColor = .clear
+        selectionStyle = .none
+    }
+    
+    private func setupConstraints() {
         profileImageView.snp.makeConstraints {
             $0.width.height.equalTo(48)
             $0.trailing.equalToSuperview().offset(-16)
@@ -63,6 +74,7 @@ class AnswerCell: UITableViewCell {
             $0.edges.equalTo(chattingView).inset(UIEdgeInsets(top: 10, left: 12, bottom: 10, right: 12))
         }
     }
+    
     
     func configure(with message: String, profileImage: UIImage?) {
         messageLabel.text = message

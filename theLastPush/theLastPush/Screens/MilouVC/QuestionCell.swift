@@ -8,15 +8,31 @@
 import UIKit
 
 class QuestionCell: UITableViewCell {
-    
     static let reuseIdentifier = "QuestionCell"
+
+    private let chattingView: UIView = {
+        let view = UIView()
+        view.backgroundColor = .white
+        view.clipsToBounds = true
+        view.layer.cornerRadius = 20
+        view.layer.maskedCorners = [ .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner ]
+        view.layer.borderWidth = 2
+        view.layer.borderColor = UIColor.introRed.cgColor
+        return view
+    }()
     
-    private let messageLabel = UILabel()
-    private let chattingView = UIView()
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.font = UIFont.ibmPlexSansKR(size: 15, weight: .medium)
+        return label
+    }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        setupUI()
+        setupView()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
@@ -24,23 +40,15 @@ class QuestionCell: UITableViewCell {
     }
     
     
-    private func setupUI() {
-        backgroundColor = .clear
-        selectionStyle = .none
-        
-        chattingView.backgroundColor = .white
-        chattingView.clipsToBounds = true
-        chattingView.layer.cornerRadius = 20
-        chattingView.layer.maskedCorners = [ .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner ]
-        chattingView.layer.borderWidth = 2
-        chattingView.layer.borderColor = UIColor.introRed.cgColor
+    private func setupView() {
         contentView.addSubview(chattingView)
-        
-        messageLabel.numberOfLines = 0
-        messageLabel.textColor = .black
-        messageLabel.font = UIFont.ibmPlexSansKR(size: 15, weight: .medium)
         chattingView.addSubview(messageLabel)
         
+        backgroundColor = .clear
+        selectionStyle = .none
+    }
+    
+    private func setupConstraints() {
         chattingView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
             $0.leading.equalToSuperview().offset(16)
