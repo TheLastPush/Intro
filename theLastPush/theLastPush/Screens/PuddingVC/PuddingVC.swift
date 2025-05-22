@@ -62,8 +62,6 @@ class PuddingVC: UIViewController {
         setupAboutMeSection()
         // 장점 부분
         setupstrengthSection()
-        // 블로그 버튼
-        setupBlogButton()
         // 협업 스타일 부분
         setupCollaborationSection()
     }
@@ -221,12 +219,6 @@ class PuddingVC: UIViewController {
             make.bottom.equalToSuperview().inset(12)
             make.width.height.equalTo(32)
         }
-    }
-    
-    func setupBlogButton(){
-        
-        
-        
     }
     
     func setupCollaborationSection() {
