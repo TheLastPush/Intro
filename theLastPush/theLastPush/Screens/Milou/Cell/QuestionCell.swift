@@ -1,5 +1,5 @@
 //
-//  AnswerCell.swift
+//  QuestionCell.swift
 //  theLastPush
 //
 //  Created by 지영 on 5/21/25.
@@ -7,33 +7,26 @@
 
 import UIKit
 
-class AnswerCell: UITableViewCell {
-    static let reuseIdentifier = "AnswerCell"
-    
-    private let profileImageView: UIImageView = {
-        let imageView = UIImageView()
-        imageView.clipsToBounds = true
-        imageView.contentMode = .scaleAspectFill
-        return imageView
-    }()
-    
-    private let messageLabel: UILabel = {
-        let label = UILabel()
-        label.font = UIFont.ibmPlexSansKR(size: 15)
-        label.textColor = .black
-        label.numberOfLines = 0
-        return label
-    }()
-    
+class QuestionCell: UITableViewCell {
+    static let reuseIdentifier = "QuestionCell"
+
     private let chattingView: UIView = {
         let view = UIView()
         view.backgroundColor = .white
         view.clipsToBounds = true
         view.layer.cornerRadius = 20
-        view.layer.maskedCorners = [ .layerMinXMinYCorner, .layerMinXMaxYCorner, .layerMaxXMaxYCorner ]
+        view.layer.maskedCorners = [ .layerMinXMaxYCorner, .layerMaxXMinYCorner, .layerMaxXMaxYCorner ]
         view.layer.borderWidth = 2
-        view.layer.borderColor = UIColor.answerRed.cgColor
+        view.layer.borderColor = UIColor.introRed.cgColor
         return view
+    }()
+    
+    private let messageLabel: UILabel = {
+        let label = UILabel()
+        label.numberOfLines = 0
+        label.textColor = .black
+        label.font = UIFont.ibmPlexSansKR(size: 15, weight: .medium)
+        return label
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
@@ -46,9 +39,8 @@ class AnswerCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-
+    
     private func setupView() {
-        contentView.addSubview(profileImageView)
         contentView.addSubview(chattingView)
         chattingView.addSubview(messageLabel)
         
@@ -57,16 +49,10 @@ class AnswerCell: UITableViewCell {
     }
     
     private func setupConstraints() {
-        profileImageView.snp.makeConstraints {
-            $0.width.height.equalTo(48)
-            $0.trailing.equalToSuperview().offset(-16)
-            $0.top.equalTo(chattingView.snp.top)
-        }
-        
         chattingView.snp.makeConstraints {
             $0.top.equalToSuperview().offset(8)
-            $0.trailing.equalTo(profileImageView.snp.leading).offset(-8)
-            $0.bottom.equalToSuperview().offset(-24)
+            $0.leading.equalToSuperview().offset(16)
+            $0.bottom.equalToSuperview().offset(-8)
             $0.width.lessThanOrEqualTo(contentView.snp.width).multipliedBy(0.8)
         }
         
@@ -75,10 +61,7 @@ class AnswerCell: UITableViewCell {
         }
     }
     
-    
-    func configure(with message: String, profileImage: UIImage?) {
+    func configure(with message: String) {
         messageLabel.text = message
-        profileImageView.image = profileImage
     }
-    
 }

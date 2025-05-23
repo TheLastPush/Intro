@@ -8,8 +8,8 @@
 import UIKit
 
 class MainView: UIView {
-    
     private let collectionView = MemberCollectionView()
+    
     var onIntroButtonTapped: (() -> Void)?
     var onMemberSelected: ((Member) -> Void)?
     
