@@ -26,7 +26,7 @@ class MemberCell: UICollectionViewCell {
     
     private let nameLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "IBMPlexSansKR-SemiBold", size: 15)
+        label.font = UIFont.ibmPlexSansKR(size: 15, weight: .semibold)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -34,7 +34,7 @@ class MemberCell: UICollectionViewCell {
     
     private let mbtiLabel: UILabel = {
         let label = UILabel()
-        label.font = UIFont(name: "IBMPlexSansKR-SemiBold", size: 15)
+        label.font = UIFont.ibmPlexSansKR(size: 15, weight: .semibold)
         label.textColor = .black
         label.textAlignment = .center
         return label
@@ -42,39 +42,42 @@ class MemberCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setupUI()
+        setupView()
+        setupConstraints()
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    private func setupUI() {
+    private func setupView() {
         contentView.addSubview(containerView)
         containerView.addSubview(profileImageView)
         containerView.addSubview(nameLabel)
         containerView.addSubview(mbtiLabel)
-        
-        containerView.snp.makeConstraints { make in
-            make.edges.equalToSuperview()
+    }
+    
+    private func setupConstraints() {
+        containerView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
         }
         
-        profileImageView.snp.makeConstraints { make in
-            make.centerX.equalToSuperview()
-            make.top.equalToSuperview().offset(30)
-            make.width.height.equalTo(90)
+        profileImageView.snp.makeConstraints {
+            $0.centerX.equalToSuperview()
+            $0.top.equalToSuperview().offset(30)
+            $0.width.height.equalTo(90)
         }
         
-        nameLabel.snp.makeConstraints { make in
-            make.top.equalTo(profileImageView.snp.bottom).offset(20)
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(10)
+        nameLabel.snp.makeConstraints {
+            $0.top.equalTo(profileImageView.snp.bottom).offset(20)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(10)
         }
         
-        mbtiLabel.snp.makeConstraints { make in
-            make.top.equalTo(nameLabel.snp.bottom).offset(8)
-            make.centerX.equalToSuperview()
-            make.leading.trailing.equalToSuperview().inset(10)
+        mbtiLabel.snp.makeConstraints {
+            $0.top.equalTo(nameLabel.snp.bottom).offset(8)
+            $0.centerX.equalToSuperview()
+            $0.leading.trailing.equalToSuperview().inset(10)
         }
     }
     
