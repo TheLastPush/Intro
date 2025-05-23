@@ -45,17 +45,8 @@ class PuddingVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = pudding.backgroundColor
-        
-        backButton.setImage(UIImage(named: "tyback"), for: .normal)
-        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
-
-        view.addSubview(backButton)
-        backButton.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
-            make.leading.equalToSuperview().offset(16)
-            make.height.equalTo(30)
-        }
-        
+        // 뒤로가기 버튼
+        setupBackButton()
         // 프로필 부분
         setupProfileSection()
         // 소개 부분
@@ -65,6 +56,20 @@ class PuddingVC: UIViewController {
         // 협업 스타일 부분
         setupCollaborationSection()
     }
+    
+    func setupBackButton(){
+        //뒤로가기
+        backButton.setImage(UIImage(named: "tyback"), for: .normal)
+        backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
+
+        view.addSubview(backButton)
+        
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(16)
+            make.leading.equalToSuperview().offset(16)
+            make.height.equalTo(30)
+        }
+    }
     func setupProfileSection(){
         // 프로필 사진
         profileImageView.image = UIImage(named: pudding.profileImage)
@@ -73,7 +78,7 @@ class PuddingVC: UIViewController {
         profileImageView.contentMode = .scaleAspectFill
         
         view.addSubview(profileImageView)
-        
+
         profileImageView.snp.makeConstraints { make in
             make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(30)
             make.centerX.equalToSuperview()
