@@ -10,29 +10,7 @@ import SnapKit
 
 class MainVC: UIViewController {
     
-//    private let members: [Member] = memberData
-    private let collectionView = MemberCollectionView()
-    
-    private let titleLabel: UILabel = {
-        let label = UILabel()
-        label.text = "THE LAST PUSH"
-        label.font = UIFont.ibmPlexSansKR(size: 36, weight: .black)
-        label.textColor = .black
-        label.textAlignment = .center
-        label.shadowColor = UIColor(white: 0, alpha: 0.2)
-        label.shadowOffset = CGSize(width: 0, height: 3)
-        return label
-    }()
-    
-    private let introButton: UIButton = {
-        let button = UIButton()
-        let image = UIImage(named: "IntroButton")
-        button.setImage(image, for: .normal)
-        button.imageView?.contentMode = .scaleAspectFit
-        button.backgroundColor = .clear
-        return button
-    }()
-    
+    private let mainView = MainView()
     
 	override func viewWillAppear(_ animated: Bool) {
 		navigationController?.isNavigationBarHidden = true
@@ -44,46 +22,27 @@ class MainVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupView()
-        setupConstraints()
+        setUpView()
     }
     
-    private func setupView()  {
-        view.addSubview(titleLabel)
-        view.addSubview(introButton)
-        view.addSubview(collectionView)
+    private func setUpView() {
+        view.addSubview(mainView)
+        mainView.snp.makeConstraints {
+            $0.edges.equalToSuperview()
+        }
         
-        view.backgroundColor = .white
+        mainView.onIntroButtonTapped = { [weak self] in
+            guard let self else { return }
+            presentOnboarding()
+        }
         
-        collectionView.onMemberSelected = { [weak self] member in
-            self?.handleMemberSelection(member)
+        mainView.onMemberSelected = { [weak self] member in
+            guard let self else { return }
+            handleMemberSelection(member)
         }
     }
-    
-    private func setupConstraints() {
-        titleLabel.snp.makeConstraints {
-            $0.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(56)
-            $0.centerX.equalToSuperview()
-            $0.leading.trailing.equalToSuperview().inset(24)
-        }
-        
-        introButton.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom).offset(50)
-            $0.centerX.equalToSuperview()
-            $0.width.equalTo(200)
-            $0.height.equalTo(60)
-        }
-        
-        collectionView.snp.makeConstraints {
-            $0.top.equalTo(introButton.snp.bottom).offset(60)
-            $0.leading.trailing.equalToSuperview().inset(20)
-            $0.bottom.equalTo(view.safeAreaLayoutGuide.snp.bottom).offset(-8)
-        }
-        
-        introButton.addTarget(self, action: #selector(introButtonTapped), for: .touchUpInside)
-    }
-    
-    @objc private func introButtonTapped() {
+
+    private func presentOnboarding() {
         let vc = OnboardingVC()
         vc.modalPresentationStyle = .fullScreen
         present(vc, animated: true)
@@ -106,11 +65,4 @@ class MainVC: UIViewController {
         
         self.navigationController?.pushViewController(nextViewController, animated: true)
     }
-    
 }
-
-
-
-
-
-
