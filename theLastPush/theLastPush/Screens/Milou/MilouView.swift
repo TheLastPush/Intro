@@ -13,7 +13,6 @@ protocol MilouViewButtonDelegate: AnyObject {
 }
 
 class MilouView: UIView {
-
     private let member: Member
     private let tableView: ChattingTableView
     
@@ -97,7 +96,6 @@ class MilouView: UIView {
         
         self.backgroundColor = UIColor.backgroundRed
     }
-    
     
     private func setupConstraints() {
         backButton.snp.makeConstraints {

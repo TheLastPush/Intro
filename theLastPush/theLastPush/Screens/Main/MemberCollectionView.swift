@@ -9,7 +9,6 @@ import UIKit
 import SnapKit
 
 class MemberCollectionView: UIView {
-    
     private let members: [Member] = memberData
     var onMemberSelected: ((Member) -> Void)?
     

@@ -69,7 +69,6 @@ class ChattingTableView: UIView {
         
         let indexPath = IndexPath(row: messages.count - 1, section: 0)
         
-        // 테이블뷰에 새 셀 추가
         tableView.insertRows(at: [indexPath], with: .none)
         tableView.layoutIfNeeded()
         
