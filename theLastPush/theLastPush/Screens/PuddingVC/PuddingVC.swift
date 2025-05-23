@@ -46,7 +46,7 @@ class PuddingVC: UIViewController {
         super.viewDidLoad()
         view.backgroundColor = pudding.backgroundColor
         // 뒤로가기 버튼
-        setupBackbutton()
+        setupBackButton()
         // 프로필 부분
         setupProfileSection()
         // 소개 부분
@@ -57,7 +57,7 @@ class PuddingVC: UIViewController {
         setupCollaborationSection()
     }
     
-    func setupBackbutton(){
+    func setupBackButton(){
         //뒤로가기
         backButton.setImage(UIImage(named: "tyback"), for: .normal)
         backButton.addTarget(self, action: #selector(close), for: .touchUpInside)
