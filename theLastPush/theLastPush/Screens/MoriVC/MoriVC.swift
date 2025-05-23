@@ -9,8 +9,6 @@ import SnapKit
 import UIKit
 
 final class MoriVC: UIViewController {
-    private let scrollView = UIScrollView() // 스크롤 가능한 화면을 만들기 위한 베이스 View
-    private let contentView = UIView() // ScrollView안에 실제 콘텐츠를 넣는 뷰
     private let cardView = UIView() // 흰색 박스 View
     
     private let profileImageView = UIImageView()
@@ -46,7 +44,6 @@ final class MoriVC: UIViewController {
     
     // MARK: - Layout
     private func setupLayout() {
-        setupBaseLayout()
         setupBackButtonLayout()
         setupCardViewLayout()
         setupProfileImageLayout()
@@ -70,29 +67,24 @@ final class MoriVC: UIViewController {
         collaborationContentLabel.text = "각자의 스타일을 이해하고, 함께 조율하여 맞춰나가려고 노력합니다. 😊"
     }
     
-    // MARK: - 베이스 뷰 (스크롤 뷰 + 컨텐츠 뷰)
-    private func setupBaseLayout() {
-        view.addSubview(scrollView)
-        scrollView.addSubview(contentView)
+    // MARK: - Back 버튼
+    private func setupBackButtonLayout() {
+        view.addSubview(backButton)
         
-        scrollView.snp.makeConstraints { make in // scrollView의 제약 조건
-            make.edges.equalTo(view.safeAreaLayoutGuide)
-        }
-        
-        contentView.snp.makeConstraints { make in // contentView의 제약 조건
-            make.edges.equalToSuperview()
-            make.width.equalToSuperview()
-            make.height.greaterThanOrEqualToSuperview() // 최소 높이 제약 추가
+        backButton.snp.makeConstraints { make in
+            make.top.equalTo(view).offset(70)
+            make.leading.equalToSuperview().offset(8)
+            make.width.height.equalTo(44)
         }
     }
+    
     // MARK: - 카드 뷰
     private func setupCardViewLayout() {
-        contentView.addSubview(cardView) // 하얀색 박스 영역
-        
-        cardView.snp.makeConstraints { make in // cardView의 제약 조건
-            make.top.equalTo(contentView).offset(100)
-            make.leading.trailing.equalTo(contentView).inset(20)
-            make.bottom.equalTo(contentView).inset(20)
+        view.addSubview(cardView)
+        cardView.snp.makeConstraints { make in
+            make.top.equalTo(view.safeAreaLayoutGuide).offset(100)
+            make.leading.trailing.equalToSuperview().inset(20)
+            make.bottom.equalTo(view.safeAreaLayoutGuide).inset(20)
         }
     }
     
@@ -207,17 +199,6 @@ final class MoriVC: UIViewController {
             make.height.equalTo(44)
         }
     }
-
-    // MARK: - Back 버튼
-    private func setupBackButtonLayout() {
-        view.addSubview(backButton)
-        
-        backButton.snp.makeConstraints { make in
-            make.top.equalTo(view).offset(70)
-            make.leading.equalToSuperview().offset(8)
-            make.width.height.equalTo(44)
-        }
-    }
     
     private func setupActions() {
         blogButton.addTarget(self, action: #selector(blogButtonTapped), for: .touchUpInside)
@@ -240,12 +221,7 @@ final class MoriVC: UIViewController {
         setupGitHubButtonStyle()
     }
     
-    // MARK: - 베이스 디자인(스크롤 뷰 + 컨텐츠 뷰)
-    private func setupBaseStyle() {
-        view.backgroundColor = .systemGroupedBackground
-        scrollView.backgroundColor = .clear
-        contentView.backgroundColor = .clear
-    }
+
     
     // MARK: - 뒤로가기 버튼 디자인
     private func setupBackButtonStyle() {
@@ -254,6 +230,11 @@ final class MoriVC: UIViewController {
         backButton.tintColor = .label
     }
     
+    // MARK: - 베이스 뷰 스타일
+    private func setupBaseStyle() {
+        view.backgroundColor = .systemGroupedBackground
+    }
+
     // MARK: - 카드 뷰 디자인
     private func setupCardViewStyle() {
         cardView.backgroundColor = .white
