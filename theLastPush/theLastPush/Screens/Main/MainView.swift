@@ -49,6 +49,8 @@ class MainView: UIView {
         self.addSubview(collectionView)
         self.backgroundColor = .white
         
+        introButton.addTarget(self, action: #selector(introButtonTapped), for: .touchUpInside)
+        
         collectionView.onMemberSelected = { [weak self] member in
             guard let self else { return }
             onMemberSelected?(member)
